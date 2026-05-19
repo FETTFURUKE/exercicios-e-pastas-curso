@@ -1,28 +1,15 @@
 #include <stdio.h>
-#include <windows.h>
 
-
-
-float area, base, altura;
-float areaR(float base, float altura) {
-return base * altura;
+float areaRetangulo(float base, float altura) {
+    return base * altura;
 }
 
-int main(){
-
-printf("Digite base: \n");
-scanf("%f", &base);
-
-printf("Digite altura: \n");
-scanf("%f", &altura);
-
-
-
-printf(" ----  %.2f  ----", areaR( base, altura));
-
-
-
-
-
-
+int main() {
+    float b, h;
+    printf("Base: ");
+    scanf("%f", &b);
+    printf("Altura: ");
+    scanf("%f", &h);
+    printf("Área: %.2f\n", areaRetangulo(b, h));
+    return 0;
 }
