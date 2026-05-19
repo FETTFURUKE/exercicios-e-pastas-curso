@@ -8,5 +8,6 @@
         "maior",
         "menor",
         "scabf"
-    ]
+    ],
+    "gitdoc.enabled": true
 }
