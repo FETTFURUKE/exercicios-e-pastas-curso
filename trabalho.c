@@ -125,10 +125,23 @@ int main()
                 precos,
                 estoques,
                 total);
+
+            
+
+
+
             break;
 
         case 2:
-            // IMPLEMENTAR
+          
+         while (MAX > 1){
+         printf("\n %d \n ", nomes );
+         printf("\n %f \n ", precos );
+         printf("\n %d \n ", estoques );
+
+         }
+
+
             break;
 
         case 3:
