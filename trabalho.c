@@ -133,11 +133,11 @@ int main()
             break;
 
         case 2:
-          
-         while (MAX > 1){
-         printf("\n %d \n ", nomes );
-         printf("\n %f \n ", precos );
-         printf("\n %d \n ", estoques );
+
+
+
+
+
 
          }
 
