@@ -174,7 +174,7 @@ int main()
                 break;
             }
 
-            int indiceMaior = 0; // aqui eu 
+            int indiceMaior = 0; // aqui eu "chuto" que o primeiro numero e o maior
 
             for (i = 1; i < total; i++) { // passa comparando com o resto dos produtos
                 if (precos[i] > precos[indiceMaior]) { // se o preco desse for maior do que o que eu ja tinha salvo
