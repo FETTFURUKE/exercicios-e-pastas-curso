@@ -5,7 +5,7 @@
 
 
 
-typedef struct { //struct seria aonde os dados sao reunidos e typedef seria
+typedef struct { //struct seria aonde os dados sao reunidos e typedef seria trocar o nome struct para um nome selecionado como oque eu usei com o "PRODUTO"
     char nome[50];
     float preco;
     int estoque;
