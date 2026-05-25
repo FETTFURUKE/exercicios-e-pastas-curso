@@ -1,9 +1,8 @@
 #include <stdio.h>   
 #include <string.h> 
+#include <stdlib.h> 
 
 #define MAX 10 // aqui eu defino um limite maximo de 10 
-
-
 
 typedef struct { //struct seria aonde os dados sao reunidos e typedef seria trocar o nome struct para um nome selecionado como oque eu usei com o "PRODUTO"
     char nome[50];
@@ -56,7 +55,7 @@ int cadastrarProduto(Produto produtos[], int total)
 
     if (total >= MAX) // aqui eu defino o limite maximo de produtos usando o MAX
     {
-        printf("\nLimite maximo de produtos atingido! Nao cabe mais nada.\n");
+        printf("\nLimite maximo de produtos atingido\n");
         return total; // aqui ele "ignora" o que foi digitado e continua com os 10 produtos salvos sem mudar nada
     }
 
@@ -111,12 +110,12 @@ void menu() // essa funcao serve para mostrar as opcoes na tela
 
 int main()
 {
-    
     Produto produtos[MAX]; 
     int total = 0; 
     int opcao;    
     int i;        
     char Pcadastro;
+
     do
     {
         menu(); // aqui ele mostra o menu na tela
@@ -126,8 +125,19 @@ int main()
         switch (opcao) // aqui ele joga para o caso que eu escolhi no menu
         {
         case 1:
-            // Passamos apenas a lista única de produtos e o total
-            total = cadastrarProduto(produtos, total);
+            do {
+                total = cadastrarProduto(produtos, total);
+                
+                if (total >= MAX) {
+                    break; // Se estourar o limite de 10, sai do laço de repetição automático
+                }
+
+                printf("\nDeseja realizar outro cadastro? (s/n): ");
+                scanf(" %c", &Pcadastro);// coloquei isso tipo o usuario nao precisa ir ate o menu paara cadastrar outro produto
+            } while (Pcadastro == 's' || Pcadastro == 'S');
+              // talvez voce se pergunte mas aonde esta o n?
+              /* nao usei o n por que nao a necessidade por que se o usuario digitar outra letra o numero ou se der
+              so enter ele entendera como erro re voltara para o menu automaticamente anulando a necessidade de colocar N*/
           
             break;
 
@@ -144,15 +154,15 @@ int main()
                 // usamos o .nome, .preco e .estoque para exibir os dados da struct
                 printf("Nome: %s | Preco: R$ %.2f | Estoque: %d", produtos[i].nome, produtos[i].preco, produtos[i].estoque);
                 
-                if (produtos[i].estoque < 2) { // checa automaticamente se o estoque tá baixo
-                    printf(" -> [ALERTA: ESTOQUE BAIXO]");
+                if (produtos[i].estoque < 5) { // AJUSTADO: Alerta para estoque menor que 5 baseado no desafio extra
+                    printf(" -> ALERTA: ESTOQUE BAIXO!!!!!!!!!!");
                 }
                 
                 printf("\n");
                 i++; // aqui eu pulo para a proxima linha da lista
             }
             break;
-
+ 
         case 3: { 
             if (total == 0) { // verifica se tem produtos antes de comecar a busca
                 printf("\nNenhum produto cadastrado para buscar!\n");
@@ -172,7 +182,8 @@ int main()
                     printf("\nProduto Encontrado!\n");
                     printf("Nome: %s | Preco: R$ %.2f | Estoque: %d", produtos[i].nome, produtos[i].preco, produtos[i].estoque);
                     
-                    if (produtos[i].estoque < 2) { // aviso automático integrado na busca
+                    if (produtos[i].estoque < 3) { /* seria um codigo que verefica automaticamente 
+                        pro usuario se o estoque do produto pesquisado ou listado esta correto*/
                         printf(" -> [ALERTA: ESTOQUE BAIXO]");
                     }
                     
@@ -216,7 +227,7 @@ int main()
             float valorTotalGeral = 0; // aqui e como se fosse a calculadora sem infromaçoes zerada
 
             for (i = 0; i < total; i++) { // loop para passar por todos os produtos
-                // calcula o preco vezes o estoque acessando direto da struct
+                // calcula o preco vezes o estoque acessando directo da struct
                 valorTotalGeral += (produtos[i].preco * produtos[i].estoque);
             }
 
@@ -276,8 +287,7 @@ int main()
                     achou = 1; 
                     
                     /*aqui o struct auxilia tipo inves de eu digitar nome , preço e depois estoque, com
-                     ele nao como ele tem tudo ja armazenado eu so chamo ele com o nome denominado e pronto*/
-
+                      ele nao como ele tem tudo ja armazenado eu so chamo ele com o nome denominado e pronto*/
                     
                     for (j = i; j < total - 1; j++) {
                         produtos[j] = produtos[j + 1]; // Copia o produto da frente inteirinho para trás
@@ -340,6 +350,20 @@ int main()
         default:
             printf("\nOpcao invalida! Escolha um numero do menu.\n");
         }
+
+      
+   
+        if (opcao != 0) {
+            printf("\n--------------------------------------------------\n");
+            printf("Pressione [Enter] para voltar ao menu...");
+            // coloquei isso por que o menu estava tampando o resultado
+           
+            while (getchar() != '\n'); 
+            
+            getchar();     // Trava o programa na tela para você ler o resultado com calma
+            system("cls"); // limpa o terminal completamente antes de rodar o menu de novo
+        }
+        // =========================================================================
 
     } while (opcao != 0); // aqui ele mantem o menu rodando ate que a opcao digitada seja zero
 
