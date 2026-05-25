@@ -116,7 +116,7 @@ int main()
     int total = 0; 
     int opcao;    
     int i;        
-    
+    char Pcadastro;
     do
     {
         menu(); // aqui ele mostra o menu na tela
@@ -128,6 +128,9 @@ int main()
         case 1:
             // Passamos apenas a lista única de produtos e o total
             total = cadastrarProduto(produtos, total);
+            printf("deseja realizar outro cadastro? (sim/nao) /n")
+            scanf("%s", char Pcadastro);
+            
             break;
 
         case 2:
