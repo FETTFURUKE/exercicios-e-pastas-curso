@@ -146,7 +146,13 @@ int main()
             printf("  LISTA DE PRODUTOS  ");
             i = 0;
             while( i < total, i++) {
-            printf("%.d", total);
+            printf("%.d", 
+                nomes[i],    precos[i],    estoques[i]
+
+            
+            
+            
+            );
             }
             break;
 
