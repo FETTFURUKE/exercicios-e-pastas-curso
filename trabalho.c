@@ -148,8 +148,8 @@ int main()
             char busca[50]; // variavel para guardar o nome do produto que eu quero achar
             int achou = 0;  // essa variavel comeca em zero e serve para avisar se achei ou nao
 
-            getchar(); // limpa a memoria do teclado
-            printf("\nDigite o nome do produto para buscar: ");
+            getchar(); // limpa a memoria do terminal
+            printf("\nDigite o nome do produto: ");
             fgets(busca, 50, stdin); // le o nome que eu quero buscar
             busca[strcspn(busca, "\n")] = '\0'; // tira o enter do final do texto de busca
 
