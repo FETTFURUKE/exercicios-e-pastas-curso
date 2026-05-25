@@ -45,21 +45,19 @@ int lerEstoque()// seria uma função semelhante a anterios mais agora controlan
 }
 
 
-// FUNÇÃO: CADASTRO DE PRODUTOS
-// Recebe as listas por referência (ponteiros implícitos) e a quantidade atual de cadastrados.
-// ====================================================================================
+
 int cadastrarProduto(char nomes[][50], float precos[], int estoques[], int total)
 {
-    int i = total; // O índice 'i' recebe o valor de 'total'. Se temos 0 produtos, o novo vai para a linha 0.
+    int i = total; //aqui eu defino o total de produtos
 
-    // BARREIRA DE SEGURANÇA: Se o total for 10, significa que usamos as linhas de 0 a 9. Não há mais espaço.
-    if (total >= MAX)
+    
+    if (total >= MAX)// aqui eu defino o limite maximo de produtos usando o MAX
     {
         printf("\nLimite maximo de produtos atingido! Nao cabe mais nada.\n");
-        return total; // Retorna o mesmo total, sem cadastrar nada, cancelando a execução da função
+        return total; // aqui ele "ignora" o que foi digitado e continua com os 10 produtos salvos sem mudar nada
     }
 
-    getchar(); // LIMPEZA DE BUFFER: Remove o 'Enter' (\n) que sobrou do último scanf no menu, evitando que o fgets seja pulado.
+    getchar(); // ele remove os dados anterios para evitar enganos
 
     printf("\n===== CADASTRO DE PRODUTO =====\n");
 
