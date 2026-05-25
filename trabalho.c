@@ -78,10 +78,10 @@ int cadastrarProduto(char nomes[][50], float precos[], int estoques[], int total
 
     printf("\nProduto cadastrado com sucesso!\n");
 
-    return total; // aqui ele devolve o total atualizado para a funcao principal
+    return total; // aqui ele devolve o total updated para a funcao principal
 }
 
-void menu() // essa funcao serve para mostrar as opcoes na tela
+void menu() // essa funcao serve para mostrar as opcoes na tela (agora sem a opcao 10)
 {
     printf("\n=====================================\n");
     printf("        SISTEMA DE PRODUTOS\n");
@@ -95,7 +95,6 @@ void menu() // essa funcao serve para mostrar as opcoes na tela
     printf("7 - Remover produto\n");
     printf("8 - Produto mais barato\n");
     printf("9 - Media de precos dos produtos\n");
-    printf("10 - Alerta de estoque baixo (< 2 unidades)\n");
     printf("0 - Sair\n");
     printf("Opcao: ");
 }
@@ -133,8 +132,14 @@ int main()
             i = 0; // comeco a olhar a partir da primeira posicao
             while (i < total) // aqui ele roda ate chegar no limite de itens cadastrados
             {
-                // aqui ele printa  em forma de tabela os produtos e suas infromaçoes
-                printf("Nome: %s | Preco: R$ %.2f | Estoque: %d \n", nomes[i], precos[i], estoques[i]);
+                // aqui ele printa os dados basicos do produto atual
+                printf("Nome: %s | Preco: R$ %.2f | Estoque: %d", nomes[i], precos[i], estoques[i]);
+                
+                if (estoques[i] < 2) { // aqui ele checa sozinho se o estoque dessa linha ta menor que 2
+                    printf(" -> [ALERTA: ESTOQUE BAIXO]"); // se tiver baixo ele poe o texto na mesma linha
+                }
+                
+                printf("\n"); // pula a linha para o proximo produto ficar organizado
                 i++; // aqui eu pulo para a proxima linha da lista
             }
             break;
@@ -156,7 +161,13 @@ int main()
             for (i = 0; i < total; i++) { // aqui ele passa olhando linha por linha dos produtos
                 if (strcmp(nomes[i], busca) == 0) { // aqui ele compara se os dois nomes sao iguais
                     printf("\nProduto Encontrado!\n");
-                    printf("Nome: %s | Preco: R$ %.2f | Estoque: %d\n", nomes[i], precos[i], estoques[i]);
+                    printf("Nome: %s | Preco: R$ %.2f | Estoque: %d", nomes[i], precos[i], estoques[i]);
+                    
+                    if (estoques[i] < 2) { // aqui ele ja avisa na busca se esse item achado ta acabando
+                        printf(" -> [ALERTA: ESTOQUE BAIXO]");
+                    }
+                    
+                    printf("\n");
                     achou = 1; // muda para 1 para avisar que deu certo
                     break; // aqui ele para o loop porque ja achou o que queria
                 }
@@ -294,12 +305,11 @@ int main()
 
         case 9: { 
             if (total == 0) { // confere se tem itens para fazer calculo de media
-                printf("\nNenhum produto cadastrado para calcular a media
-                    \n");
+                printf("\nNenhum produto cadastrado para calcular a media!\n");
                 break;
             }
 
-            float somaPrecos = 0; // como se fosse uma calculadora que soma  quantos produtos"preços" estao cadastrados
+            float somaPrecos = 0; // como se fosse uma calculadora que soma quantos produtos "preços" estao cadastrados
 
             for (i = 0; i < total; i++) {
                 somaPrecos += precos[i]; // aqui ele vai somando o preco de cada produto
@@ -310,29 +320,6 @@ int main()
 
             printf("\n===== MEDIA DE PRECOS =====\n");
             printf("a media de preco dos produtos cadastrados e: R$ %.2f\n", media);
-            break;
-        }
-
-        case 10: { 
-            if (total == 0) { // confere se tem produtos na lista para checar o estoque
-                printf("\nNenhum produto cadastrado para verificar!\n");
-                break;
-            }
-
-            int temEstoqueBaixo = 0; // serve para eu saber se achei alguem na condicao critica
-
-            printf("\n===== ALERTA: ESTOQUE CRITICO (< 2 UNIDADES) =====\n");
-            
-            for (i = 0; i < total; i++) { // passa olhando o estoque de todo mundo
-                if (estoques[i] < 2) { // aqui ele confere se a quantidade do produto i e menor do que 2
-                    printf("AVISO! -> Produto: %s | Estoque atual: %d\n", nomes[i], estoques[i]);
-                    temEstoqueBaixo = 1; // muda para 1 para avisar que encontrou estoque baixo
-                }
-            }
-
-            if (temEstoqueBaixo == 0) { // se passou por tudo e continuou zero significa que ta tudo certo
-                printf("Tudo seguro! Nenhum produto com estoque abaixo de 2 unidades.\n");
-            }
             break;
         }
 
