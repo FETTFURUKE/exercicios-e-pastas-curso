@@ -133,7 +133,7 @@ int main()
             i = 0; // comeco a olhar a partir da primeira posicao
             while (i < total) // aqui ele roda ate chegar no limite de itens cadastrados
             {
-                // aqui ele printa a linha i de todos os vetores juntos
+                // aqui ele printa  em forma de tabela os produtos e suas infromaçoes
                 printf("Nome: %s | Preco: R$ %.2f | Estoque: %d \n", nomes[i], precos[i], estoques[i]);
                 i++; // aqui eu pulo para a proxima linha da lista
             }
