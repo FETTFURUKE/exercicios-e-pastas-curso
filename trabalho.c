@@ -119,7 +119,7 @@ int main()
         switch (opcao) // aqui ele joga para o caso que eu escolhi no menu
         {
         case 1:
-            // aqui eu chamo o cadastro e atualizo o total da main
+            // aqui eu chamo o cadastro e atualizo o total da main adicionando 1 produto e suas informaçoes
             total = cadastrarProduto(nomes, precos, estoques, total);
             break;
 
