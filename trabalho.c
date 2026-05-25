@@ -143,7 +143,8 @@ int main()
             break;
 
         case 2:
-            printf
+            printf("  LISTA DE PRODUTOS  ")
+            for( total > MAX, )
             break;
 
         case 3:
