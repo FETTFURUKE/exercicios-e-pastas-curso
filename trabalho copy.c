@@ -133,7 +133,7 @@ int main()
                 }
 
                 printf("\nDeseja realizar outro cadastro? (s/n): ");
-                scanf(" %c", &Pcadastro); // O espaço antes do %c limpa o buffer do teclado
+                scanf(" %c", &Pcadastro); // coloquei isso tipo o usuario nao precisa ir ate o menu paara cadastrar outro produto
             } while (Pcadastro == 's' || Pcadastro == 'S');
           
             break;
@@ -179,7 +179,8 @@ int main()
                     printf("\nProduto Encontrado!\n");
                     printf("Nome: %s | Preco: R$ %.2f | Estoque: %d", produtos[i].nome, produtos[i].preco, produtos[i].estoque);
                     
-                    if (produtos[i].estoque < 5) { // AJUSTADO: Integrado com a regra de menos de 5 unidades
+                    if (produtos[i].estoque < 3) { /* seria um codigo que verefica automaticamente 
+                        pro usuario se o estoque do produto pesquisado ou listado esta correto*/
                         printf(" -> [ALERTA: ESTOQUE BAIXO]");
                     }
                     
@@ -347,17 +348,17 @@ int main()
             printf("\nOpcao invalida! Escolha um numero do menu.\n");
         }
 
-        // =========================================================================
-        // NOVO BLOCO INTEGRADO: SISTEMA DE PAUSA E LIMPEZA DE TELA (RESOLVE SEU PROBLEMA!)
+      
+   
         if (opcao != 0) {
             printf("\n--------------------------------------------------\n");
             printf("Pressione [Enter] para voltar ao menu...");
-            
-            // Esse loop limpa qualquer resto de "Enter" que ficou voando no buffer do scanf anterior
+            // coloquei isso por que o menu estava tampando o resultado
+           
             while (getchar() != '\n'); 
             
             getchar();     // Trava o programa na tela para você ler o resultado com calma
-            system("cls"); // Limpa o console completamente antes de rodar o menu de novo!
+            system("cls"); // limpa o terminal completamente antes de rodar o menu de novo
         }
         // =========================================================================
 
