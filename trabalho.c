@@ -189,18 +189,18 @@ int main()
 
         case 5: {
             if (total == 0) { // confere se tem produtos para calcular
-                printf("\nNenhum produto em estoque para calcular!\n");
+                printf("\nNenhum produto em estoque para calcular\n");
                 break;
             }
 
-            float valorTotalGeral = 0; // aqui eu crio um cofrinho zerado para ir somando os valores
+            float valorTotalGeral = 0; // aqui e como se fosse a calculadora sem infromaçoes zerada
 
             for (i = 0; i < total; i++) { // loop para passar por todos os produtos
-                // aqui ele calcula o preco vezes o estoque e vai guardando tudo no cofrinho
+                // aqui ele calcula o preco vezes o estoque e vai guardando tudo na calcualdora
                 valorTotalGeral += (precos[i] * estoques[i]);
             }
 
-            printf("\n===== VALOR TOTAL EM ESTOQUE =====\n");
+            printf("\n ===== VALOR TOTAL EM ESTOQUE ===== \n");
             printf("O valor total acumulado de todos os produtos e: R$ %.2f\n", valorTotalGeral);
             break;
         }
