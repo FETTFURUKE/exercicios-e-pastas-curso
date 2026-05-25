@@ -1,8 +1,7 @@
 #include <stdio.h>   
 #include <string.h> 
 
-#define MAX 10 //aqui eu defino um limite maximo de 10 
-
+#define MAX 10 // aqui eu defino um limite maximo de 10 
 
 float lerPreco()
 {
@@ -11,7 +10,7 @@ float lerPreco()
     do
     {
         printf("Digite o preco do produto: R$ ");
-        scanf("%f", &preco); //aqui ele le o preço digitado e guarda
+        scanf("%f", &preco); // aqui ele le o preço digitado e guarda
 
         if (preco < 0) // aqui seria uma segurança para nenhum numero negativo passar
         {
@@ -19,39 +18,34 @@ float lerPreco()
         }
 
     } while (preco < 0); // aqui ele verifica se o preço for negativo ele volta para o do
-    return preco;// se o preço digitado for positivo ele volta para quem ela foi chamada
+    
+    return preco; // se o preço digitado for positivo ele volta para quem ela foi chamada
+}
 
-
-
-
-
-int lerEstoque()// seria uma função semelhante a anterios mais agora controlando o estoque
+int lerEstoque() // seria uma função semelhante a anterios mais agora controlando o estoque
 {
-    int estoque; aqui eu crio uma variavel na memoria chamada estoque
+    int estoque; // aqui eu crio uma variavel na memoria chamada estoque
 
     do
     {
         printf("Digite a quantidade em estoque: ");
         scanf("%d", &estoque); // le um o numero inteiro digitado
 
-        if (estoque < 0)
+        if (estoque < 0) // aqui ele barra se a quantidade for menor que zero
         {
             printf("Quantidade invalida! O estoque nao pode ser negativo.\n");
         }
 
-    } while (estoque < 0); // aqui ele se repete ate que o umero digitado seja maior que 0
+    } while (estoque < 0); // aqui ele se repete ate que o numero digitado seja maior que 0
 
-    return estoque; aqui ele salva e devolta o resultado para a variavel
+    return estoque; // aqui ele salva e devolve o resultado para a variavel
 }
-
-
 
 int cadastrarProduto(char nomes[][50], float precos[], int estoques[], int total)
 {
-    int i = total; //aqui eu defino o total de produtos
+    int i = total; // aqui eu defino o total de produtos
 
-    
-    if (total >= MAX)// aqui eu defino o limite maximo de produtos usando o MAX
+    if (total >= MAX) // aqui eu defino o limite maximo de produtos usando o MAX
     {
         printf("\nLimite maximo de produtos atingido! Nao cabe mais nada.\n");
         return total; // aqui ele "ignora" o que foi digitado e continua com os 10 produtos salvos sem mudar nada
@@ -64,40 +58,30 @@ int cadastrarProduto(char nomes[][50], float precos[], int estoques[], int total
     do
     {
         printf("Nome do produto: ");
-        // fgets(onde_salvar, tamanho_maximo, de_onde_ler)
-        // stdin significa Standard Input (Teclado). Ele lê a linha inteira, incluindo espaços.
-        fgets(nomes[i], 50, stdin);
+        fgets(nomes[i], 50, stdin); // aqui ele pega o nome do produto direto do teclado
 
-        // REMOÇÃO DO ENTER: O fgets salva o texto junto com o "Enter" (\n) no final.
-        // strcspn procura onde está o "\n" no texto e retorna a posição dele.
-        // Nós vamos nessa posição exata e trocamos o "\n" por '\0' (Null character), que avisa o C onde o texto realmente termina.
+        // aqui ele acha o enter que foi digitado e corta para o texto nao quebrar a linha
         nomes[i][strcspn(nomes[i], "\n")] = '\0';
 
-        // VALIDAÇÃO: Se o usuário só apertou Enter, o tamanho do texto (strlen) será 0.
-        if (strlen(nomes[i]) == 0)
+        if (strlen(nomes[i]) == 0) // aqui ele confere se eu apertei enter sem digitar nada
         {
             printf("Nome nao pode ser vazio! Digite alguma coisa.\n");
         }
 
-    } while (strlen(nomes[i]) == 0); // Repete o pedido se o nome estiver completamente vazio
+    } while (strlen(nomes[i]) == 0); // aqui ele se repete se o nome estiver em branco
 
-    // Agora chamamos as funções de leitura e validação que criamos lá em cima.
-    // O valor retornado por elas é jogado direto na prateleira 'i' dos nossos vetores.
+    // aqui ele chama as funções la de cima para validar e salvar direto nas listas
     precos[i] = lerPreco();
     estoques[i] = lerEstoque();
 
-    total++; // INCREMENTO: Adiciona 1 ao contador de produtos cadastrados no sistema
+    total++; // aqui eu somo mais um no total de produtos salvos no sistema
 
     printf("\nProduto cadastrado com sucesso!\n");
 
-    return total; // Retorna o novo total atualizado (ex: se era 0, agora retorna 1) para atualizar a main
+    return total; // aqui ele devolve o total atualizado para a funcao principal
 }
 
-// ====================================================================================
-// FUNÇÃO: APENAS EXIBIÇÃO DO MENU
-// Não processa dados, apenas joga o texto visual na tela.
-// ====================================================================================
-void menu()
+void menu() // essa funcao serve para mostrar as opcoes na tela
 {
     printf("\n=====================================\n");
     printf("        SISTEMA DE PRODUTOS\n");
@@ -116,122 +100,103 @@ void menu()
     printf("Opcao: ");
 }
 
-// ====================================================================================
-// FUNÇÃO PRINCIPAL: O ponto de partida de toda a execução do programa
-// ====================================================================================
 int main()
 {
-    // DECLARAÇÃO DOS VETORES PARALELOS:
-    // nomes[10][50] -> Uma matriz (tabela). Tem 10 linhas, e cada linha pode ter um texto de até 50 letras.
-    char nomes[MAX][50];
-    // precos[10] -> Um vetor de 10 posições para guardar números decimais (preços).
-    float precos[MAX];
-    // estoques[10] -> Um vetor de 10 posições para guardar números inteiros (quantidades).
-    int estoques[MAX];
-
-    int total = 0; // Controla quantos produtos reais existem no sistema. Começa em zero.
-    int opcao;     // Guarda o número do menu escolhido pelo usuário.
-    int i;         // Variável universal que usaremos como contador dentro dos nossos loops (for/while).
+    // aqui eu crio as 3 listas que vao guardar as informacoes juntas na memoria
+    char nomes[MAX][50]; 
+    float precos[MAX];   
+    int estoques[MAX];   
+    int total = 0; 
+    int opcao;    
+    int i;        
     
     do
     {
-        menu(); // Desenha o menu na tela
+        menu(); // aqui ele mostra o menu na tela
 
-        scanf("%d", &opcao); // Aguarda o usuário escolher uma opção e digita o valor nela
+        scanf("%d", &opcao); // aqui ele le a opcao que eu digitei
 
-        // O switch funciona como um roteador: ele olha o número em 'opcao' e pula direto para o 'case' correspondente
-        switch (opcao)
+        switch (opcao) // aqui ele joga para o caso que eu escolhi no menu
         {
         case 1:
-            // Executa o cadastro enviando as listas e o total atual.
-            // O resultado retornado pela função atualiza a nossa variável 'total' da main.
+            // aqui eu chamo o cadastro e atualizo o total da main
             total = cadastrarProduto(nomes, precos, estoques, total);
             break;
 
         case 2:
-            // VALIDAÇÃO: Se o total for 0, o sistema avisa e o 'break' impede o programa de tentar ler memória vazia.
-            if (total == 0) {
+            if (total == 0) { // aqui ele confere se nao tem nada cadastrado ainda
                 printf("\nNenhum produto cadastrado ainda!\n");
                 break;
             }
             printf("\n===== LISTA DE PRODUTOS =====\n");
             
-            i = 0; // Reseta o contador. Vamos começar a olhar a partir do primeiro item (posição 0).
-            while (i < total) // O looping vai rodar enquanto o 'i' for menor que a quantidade total de cadastrados.
+            i = 0; // comeco a olhar a partir da primeira posicao
+            while (i < total) // aqui ele roda ate chegar no limite de itens cadastrados
             {
-                // Como os vetores são paralelos, a posição 'i' acessa o Nome, Preço e Estoque do MESMO produto.
+                // aqui ele printa a linha i de todos os vetores juntos
                 printf("Nome: %s | Preco: R$ %.2f | Estoque: %d \n", nomes[i], precos[i], estoques[i]);
-                i++; // Soma 1 ao 'i' para passar para a próxima linha da memória na próxima rodada do while.
+                i++; // aqui eu pulo para a proxima linha da lista
             }
             break;
 
-        case 3: { // Chaves '{ }' são usadas aqui para isolar e permitir a criação de variáveis locais protegidas dentro deste case.
-            if (total == 0) {
+        case 3: { 
+            if (total == 0) { // verifica se tem produtos antes de comecar a busca
                 printf("\nNenhum produto cadastrado para buscar!\n");
                 break;
             }
             
-            char busca[50]; // Variável para guardar temporariamente o texto que o usuário quer procurar.
-            int achou = 0;  // FLAG (Sinalizador): Começa em 0 (falso). Se encontrarmos o produto, vira 1 (verdadeiro).
+            char busca[50]; // variavel para guardar o nome do produto que eu quero achar
+            int achou = 0;  // essa variavel comeca em zero e serve para avisar se achei ou nao
 
-            getchar(); // Limpa o buffer para o fgets funcionar sem bugs.
+            getchar(); // limpa a memoria do teclado
             printf("\nDigite o nome do produto para buscar: ");
-            fgets(busca, 50, stdin);
-            busca[strcspn(busca, "\n")] = '\0'; // Remove o caractere de quebra de linha.
+            fgets(busca, 50, stdin); // le o nome que eu quero buscar
+            busca[strcspn(busca, "\n")] = '\0'; // tira o enter do final do texto de busca
 
-            // LOOP DE VARREDURA: O 'for' inicia 'i=0', checa se 'i < total' e adiciona 'i++' a cada ciclo.
-            for (i = 0; i < total; i++) {
-                // strcmp(texto1, texto2) compara caractere por caractere. Se forem 100% idênticos, ela retorna exatamente 0.
-                if (strcmp(nomes[i], busca) == 0) {
+            for (i = 0; i < total; i++) { // aqui ele passa olhando linha por linha dos produtos
+                if (strcmp(nomes[i], busca) == 0) { // aqui ele compara se os dois nomes sao iguais
                     printf("\nProduto Encontrado!\n");
                     printf("Nome: %s | Preco: R$ %.2f | Estoque: %d\n", nomes[i], precos[i], estoques[i]);
-                    achou = 1; // Ativa a nossa flag indicando sucesso na busca.
-                    break; // ABORTO: Se já encontramos o que queríamos, quebramos o loop 'for' imediatamente para economizar processamento.
+                    achou = 1; // muda para 1 para avisar que deu certo
+                    break; // aqui ele para o loop porque ja achou o que queria
                 }
             }
 
-            // Se o loop acima procurou em todas as linhas e a flag 'achou' continuou valendo 0...
-            if (achou == 0) {
+            if (achou == 0) { // se o loop terminou e continuou zero significa que nao achou
                 printf("\nProduto \"%s\" nao encontrado.\n", busca);
             }
             break;
         }
 
         case 4: {
-            if (total == 0) {
+            if (total == 0) { // confere se a lista nao esta vazia
                 printf("\nNenhum produto cadastrado ainda!\n");
                 break;
             }
 
-            // TÉCNICA DE COMPARAÇÃO: Nós não guardamos o preço mais alto, guardamos APENAS a LINHA (índice) dele.
-            int indiceMaior = 0; // Chutamos inicialmente que o produto da primeira linha (0) é o mais caro de todos.
+            int indiceMaior = 0; // aqui eu chuto que o primeiro produto da lista e o mais caro
 
-            // O loop começa a varrer a partir da segunda linha (índice 1), já que comparar a linha 0 com ela mesma é inútil.
-            for (i = 1; i < total; i++) {
-                // Se o preço do produto da linha 'i' atual for maior do que o preço do nosso atual campeão...
-                if (precos[i] > precos[indiceMaior]) {
-                    indiceMaior = i; // O trono muda de dono! Guardamos o novo índice 'i' como o mais caro encontrado até agora.
+            for (i = 1; i < total; i++) { // passa comparando com o resto dos produtos
+                if (precos[i] > precos[indiceMaior]) { // se o preco desse for maior do que o que eu ja tinha salvo
+                    indiceMaior = i; // a posicao do mais caro passa a ser essa nova linha i
                 }
             }
 
-            // Impressão final usando a linha que venceu a competição de maior preço
             printf("\n===== PRODUTO MAIS CARO =====\n");
             printf("Nome: %s | Preco: R$ %.2f | Estoque: %d\n", nomes[indiceMaior], precos[indiceMaior], estoques[indiceMaior]);
             break;
         }
 
         case 5: {
-            if (total == 0) {
+            if (total == 0) { // confere se tem produtos para calcular
                 printf("\nNenhum produto em estoque para calcular!\n");
                 break;
             }
 
-            float valorTotalGeral = 0; // ACUMULADOR: Variável que servirá como um "cofrinho" de somas. Deve começar obrigatoriamente em 0.
+            float valorTotalGeral = 0; // aqui eu crio um cofrinho zerado para ir somando os valores
 
-            // Varre todos os produtos cadastrados do primeiro ao último
-            for (i = 0; i < total; i++) {
-                // Multiplica o preço da linha 'i' pela quantidade em estoque da linha 'i'.
-                // O operador '+=' pega o resultado dessa multiplicação e soma ao valor que já estava guardado no cofrinho.
+            for (i = 0; i < total; i++) { // loop para passar por todos os produtos
+                // aqui ele calcula o preco vezes o estoque e vai guardando tudo no cofrinho
                 valorTotalGeral += (precos[i] * estoques[i]);
             }
 
@@ -240,12 +205,12 @@ int main()
             break;
         }
 
-        case 6: { // ALTERAR PREÇO E ESTOQUE
-            if (total == 0) {
+        case 6: { 
+            if (total == 0) { // verifica se tem o que alterar
                 printf("\nNenhum produto cadastrado para alterar!\n");
                 break;
             }
-            char busca[50];
+            char busca[50]; // guarda o nome do produto que eu quero mudar
             int achou = 0;
 
             getchar();
@@ -253,18 +218,17 @@ int main()
             fgets(busca, 50, stdin);
             busca[strcspn(busca, "\n")] = '\0';
 
-            // Primeiro passo: Localizar em qual linha ('i') o produto está escondido na memória
-            for (i = 0; i < total; i++) {
-                if (strcmp(nomes[i], busca) == 0) {
+            for (i = 0; i < total; i++) { // loop para achar em qual linha o produto esta salvo
+                if (strcmp(nomes[i], busca) == 0) { // se achar o nome igual
                     printf("\nProduto encontrado! Vamos atualizar os valores de \"%s\":\n", nomes[i]);
                     
-                    // Sobrescreve os dados antigos daquela linha 'i' chamando as nossas funções de leitura já validadas
+                    // aqui eu chamo as funcoes la de cima para colocar os novos valores por cima dos antigos
                     precos[i] = lerPreco();
                     estoques[i] = lerEstoque();
                     
-                    printf("\nValores atualizados com sucesso!\n");
+                    printf("\nValores updated com sucesso!\n");
                     achou = 1;
-                    break; // Interrompe o loop de busca
+                    break; // para a busca porque ja alterou
                 }
             }
             if (achou == 0) {
@@ -273,36 +237,32 @@ int main()
             break;
         }
 
-        case 7: { // REMOVER PRODUTO (TÉCNICA DE SHIFT LEFT / PUXA-FILA)
-            if (total == 0) {
+        case 7: { 
+            if (total == 0) { // confere se tem o que remover
                 printf("\nNenhum produto cadastrado para remover!\n");
                 break;
             }
-            char busca[50];
+            char busca[50]; // guarda o nome de quem eu quero apagar
             int achou = 0;
-            int j; // Variável de controle secundária para o segundo loop interno
+            int j; // variavel extra para ajudar a mexer na fila de produtos
 
             getchar();
             printf("\nDigite o nome do produto que deseja remover: ");
             fgets(busca, 50, stdin);
             busca[strcspn(busca, "\n")] = '\0';
 
-            // Loop para achar a linha do produto a ser deletado
-            for (i = 0; i < total; i++) {
+            for (i = 0; i < total; i++) { // loop para achar o produto na lista
                 if (strcmp(nomes[i], busca) == 0) {
-                    achou = 1; // Encontrou!
+                    achou = 1; 
                     
-                    // LÓGICA DO REMANEJAMENTO: Em C, vetores estáticos não apagam dados deixando buracos. 
-                    // Se apagarmos o item da linha 2, precisamos pegar o item da linha 3 e colar na linha 2, 
-                    // o da linha 4 colar na linha 3, e assim por diante.
-                    // O loop começa na posição do item deletado ('j = i') e vai até a penúltima posição utilizada ('total - 1')
+                    // aqui eu crio um loop que puxa todos os produtos da frente para tras para nao deixar buraco
                     for (j = i; j < total - 1; j++) {
-                        strcpy(nomes[j], nomes[j + 1]); // Copia o string da linha da frente (j+1) para a linha de trás (j)
-                        precos[j] = precos[j + 1];       // Puxa o preço da frente para trás
-                        estoques[j] = estoques[j + 1];   // Puxa o estoque da frente para trás
+                        strcpy(nomes[j], nomes[j + 1]); // puxa o nome da frente para tras
+                        precos[j] = precos[j + 1];       // puxa o preco da frente para tras
+                        estoques[j] = estoques[j + 1];   // puxa o estoque da frente para tras
                     }
                     
-                    total--; // Reduz o número total de produtos cadastrados ativos. A última linha duplicada agora fica invisível para o sistema.
+                    total--; // aqui eu tiro um do total de produtos porque deletei um item
                     printf("\nProduto removido com sucesso!\n");
                     break;
                 }
@@ -313,18 +273,17 @@ int main()
             break;
         }
 
-        case 8: { // PRODUTO MAIS BARATO
-            if (total == 0) {
+        case 8: { 
+            if (total == 0) { // confere se tem produtos na lista
                 printf("\nNenhum produto cadastrado ainda!\n");
                 break;
             }
 
-            int indiceMenor = 0; // Chuta que o menor preço está na linha inicial (0)
+            int indiceMenor = 0; // aqui eu chuto que o primeiro produto da lista e o mais barato
 
-            // Varre o restante das linhas comparando os valores reais
-            for (i = 1; i < total; i++) {
-                if (precos[i] < precos[indiceMenor]) {
-                    indiceMenor = i; // Encontrou um preço menor ainda, registra a nova linha vencedora
+            for (i = 1; i < total; i++) { // passa comparando com todos os outros itens
+                if (precos[i] < precos[indiceMenor]) { // se o preco desse for menor do que o menor que eu tinha
+                    indiceMenor = i; // a posicao do mais barato passa a ser essa linha i
                 }
             }
 
@@ -333,19 +292,19 @@ int main()
             break;
         }
 
-        case 9: { // MÉDIA DE PREÇOS
-            if (total == 0) {
+        case 9: { 
+            if (total == 0) { // confere se tem itens para fazer calculo de media
                 printf("\nNenhum produto cadastrado para calcular a media!\n");
                 break;
             }
 
-            float somaPrecos = 0; // Acumulador para somar todos os preços unitários puros
+            float somaPrecos = 0; // cofrinho para somar as etiquetas de precos
 
             for (i = 0; i < total; i++) {
-                somaPrecos += precos[i]; // Vai adicionando o valor de cada etiqueta de preço no montante
+                somaPrecos += precos[i]; // aqui ele vai somando o preco de cada produto puro
             }
 
-            // Faz o cálculo matemático básico: a soma de tudo dividido pela quantidade de itens somados
+            // aqui ele pega o resultado de todas as somas e divide pela quantidade de produtos salvos
             float media = somaPrecos / total;
 
             printf("\n===== MEDIA DE PRECOS =====\n");
@@ -353,26 +312,24 @@ int main()
             break;
         }
 
-        case 10: { // ESTOQUE BAIXO (< 2)
-            if (total == 0) {
+        case 10: { 
+            if (total == 0) { // confere se tem produtos na lista para checar o estoque
                 printf("\nNenhum produto cadastrado para verificar!\n");
                 break;
             }
 
-            int temEstoqueBaixo = 0; // Flag de segurança para o caso de o estoque de todo mundo estar em níveis normais
+            int temEstoqueBaixo = 0; // serve para eu saber se achei alguem na condicao critica
 
             printf("\n===== ALERTA: ESTOQUE CRITICO (< 2 UNIDADES) =====\n");
             
-            for (i = 0; i < total; i++) {
-                // REGRA SOLICITADA: Verifica se o número armazenado no índice atual é estritamente menor que 2 (ou seja, 0 ou 1 item)
-                if (estoques[i] < 2) {
+            for (i = 0; i < total; i++) { // passa olhando o estoque de todo mundo
+                if (estoques[i] < 2) { // aqui ele confere se a quantidade do produto i e menor do que 2
                     printf("AVISO! -> Produto: %s | Estoque atual: %d\n", nomes[i], estoques[i]);
-                    temEstoqueBaixo = 1; // Ativa a flag indicando que achamos pelo menos um caso crítico
+                    temEstoqueBaixo = 1; // muda para 1 para avisar que encontrou estoque baixo
                 }
             }
 
-            // Se o loop varreu toda a memória e a nossa flag continuou intacta em zero...
-            if (temEstoqueBaixo == 0) {
+            if (temEstoqueBaixo == 0) { // se passou por tudo e continuou zero significa que ta tudo certo
                 printf("Tudo seguro! Nenhum produto com estoque abaixo de 2 unidades.\n");
             }
             break;
@@ -386,7 +343,7 @@ int main()
             printf("\nOpcao invalida! Escolha um numero do menu.\n");
         }
 
-    } while (opcao != 0); // O loop principal do menu continua rodando enquanto a opção digitada não for zero
+    } while (opcao != 0); // aqui ele mantem o menu rodando ate que a opcao digitada seja zero
 
-    return 0; // Indica ao sistema operacional que o programa rodou perfeitamente e chegou ao fim sem travamentos
+    return 0; // avisa o computador que o programa terminou sem erros
 }
