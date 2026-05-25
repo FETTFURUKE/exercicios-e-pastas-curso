@@ -126,6 +126,7 @@ int main()
     int total = 0;
     int opcao;
     int i;
+    
     do
     {
         menu();
@@ -143,10 +144,13 @@ int main()
             break;
 
         case 2:
-            printf("  LISTA DE PRODUTOS  ");
+            printf("\n===== LISTA DE PRODUTOS =====\n");
             i = 0;
-           while (i < total) {i++;
-            printf("nome: %d, preço: R$ %.2f, estoque: %d \n", nomes[i], precos[i], estoques[i]);
+            while (i < total) 
+            {
+             
+                printf("Nome: %s | Preco: R$ %.2f | Estoque: %d \n", nomes[i], precos[i], estoques[i]);
+                i++; 
             }
             break;
 
