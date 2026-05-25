@@ -143,7 +143,7 @@ int main()
             break;
 
         case 2:
-            // IMPLEMENTAR
+            prin
             break;
 
         case 3:
