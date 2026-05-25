@@ -126,7 +126,7 @@ int main()
     int total = 0;
     int opcao;
     int i;
-    char pesquisaP;
+    
     do
     {
         menu();
@@ -144,45 +144,86 @@ int main()
             break;
 
         case 2:
+            if (total == 0) {
+                printf("\nNenhum produto cadastrado ainda!\n");
+                break;
+            }
             printf("\n===== LISTA DE PRODUTOS =====\n");
             i = 0;
             while (i < total) 
             {
-                // %s exibe o texto do nome e o i++ no final faz o loop andar certo
                 printf("Nome: %s | Preco: R$ %.2f | Estoque: %d \n", nomes[i], precos[i], estoques[i]);
                 i++; 
             }
             break;
 
-        case 3:
-           
-    char busca[50]; // Variável para o nome que queremos achar
-    
-    getchar(); // Limpa o buffer do teclado
-    printf("Digite o nome do produto para buscar: ");
-    fgets(busca, 50, stdin);
-    busca[strcspn(busca, "\n")] = '\0'; // Remove o "Enter" do final
-    for (i = 0; i < total; i++) {
-        // Se strcmp retornar 0, significa que os nomes são iguais!
-        if (strcmp(nomes[i], busca) == 0) {
-            printf("\nProduto Encontrado!\n");
-            printf("Nome: %s | Preco: R$ %.2f | Estoque: %d\n", nomes[i], precos[i], estoques[i]);
+        case 3: {
+            if (total == 0) {
+                printf("\nNenhum produto cadastrado para buscar!\n");
+                break;
+            }
             
-            // Se já achou o produto, não precisa continuar procurando os outros
-            break; 
+            char busca[50];
+            int achou = 0;
+
+            getchar(); // Limpa o buffer do teclado antes do fgets
+            printf("\nDigite o nome do produto para buscar: ");
+            fgets(busca, 50, stdin);
+            busca[strcspn(busca, "\n")] = '\0';
+
+            // Loop para procurar o produto
+            for (i = 0; i < total; i++) {
+                if (strcmp(nomes[i], busca) == 0) {
+                    printf("\nProduto Encontrado!\n");
+                    printf("Nome: %s | Preco: R$ %.2f | Estoque: %d\n", nomes[i], precos[i], estoques[i]);
+                    achou = 1;
+                    break; // Para o loop se achar o produto
+                }
+            }
+
+            if (achou == 0) {
+                printf("\nProduto \"%s\" nao encontrado.\n", busca);
+            }
+            break;
         }
-    }
-    
-    // O break do switch case
-    break;
 
-        case 4:
-            // IMPLEMENTAR
-            break;
+        case 4: {
+            if (total == 0) {
+                printf("\nNenhum produto cadastrado ainda!\n");
+                break;
+            }
 
-        case 5:
-            // IMPLEMENTAR
+            int indiceMaior = 0; // Começa assumindo que o primeiro (0) é o mais caro
+
+            // Compara o preço do primeiro com os demais do vetor
+            for (i = 1; i < total; i++) {
+                if (precos[i] > precos[indiceMaior]) {
+                    indiceMaior = i; // Atualiza o índice do mais caro
+                }
+            }
+
+            printf("\n===== PRODUTO MAIS CARO =====\n");
+            printf("Nome: %s | Preco: R$ %.2f | Estoque: %d\n", nomes[indiceMaior], precos[indiceMaior], estoques[indiceMaior]);
             break;
+        }
+
+        case 5: {
+            if (total == 0) {
+                printf("\nNenhum produto em estoque para calcular!\n");
+                break;
+            }
+
+            float valorTotalGeral = 0;
+
+            // Multiplica o preço de cada item pelo seu estoque correspondente e soma tudo
+            for (i = 0; i < total; i++) {
+                valorTotalGeral += (precos[i] * estoques[i]);
+            }
+
+            printf("\n===== VALOR TOTAL EM ESTOQUE =====\n");
+            printf("O valor total acumulado de todos os produtos e: R$ %.2f\n", valorTotalGeral);
+            break;
+        }
 
         case 0:
             printf("\nPrograma encerrado.\n");
