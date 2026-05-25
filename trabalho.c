@@ -126,7 +126,7 @@ int main()
     int total = 0;
     int opcao;
     int i;
-    
+    char pesquisaP;
     do
     {
         menu();
@@ -156,7 +156,8 @@ int main()
 
         case 3:
             printf("digite o nome do produto: \n");
-            scanf("%s", 
+            scanf("%s", pesquisaP);
+                 printf("Nome: %s | Preco: R$ %.2f | Estoque: %d \n", nomes[i], precos[i], estoques[i]);
             break;
 
         case 4:
