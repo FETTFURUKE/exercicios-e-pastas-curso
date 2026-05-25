@@ -49,7 +49,7 @@ int lerEstoque() // seria uma função semelhante a anterios mais agora controla
     return estoque; // aqui ele salva e devolve o resultado para a variavel
 }
 
-// Agora a função recebe apenas a lista de structs de Produtos, bem mais simples!
+// aqui ele busca em PRODUTOS"struct" as variaveis armazenadas
 int cadastrarProduto(Produto produtos[], int total)
 {
     int i = total; // aqui eu defino o total de produtos
@@ -80,7 +80,7 @@ int cadastrarProduto(Produto produtos[], int total)
 
     } while (strlen(produtos[i].nome) == 0); // aqui ele se repete se o nome estiver em branco
 
-    // aqui ele chama as funções la de cima para validar e salvar usando o ponto (.)
+    // aqui ele chama as funções la de cima para validar e salvar usando o ponto  .
     produtos[i].preco = lerPreco();
     produtos[i].estoque = lerEstoque();
 
