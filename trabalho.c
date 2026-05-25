@@ -111,7 +111,7 @@ void menu() // essa funcao serve para mostrar as opcoes na tela
 
 int main()
 {
-    // Em vez de 3 listas separadas, criamos apenas UMA lista baseada na nossa Struct
+    
     Produto produtos[MAX]; 
     int total = 0; 
     int opcao;    
