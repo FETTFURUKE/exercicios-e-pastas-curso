@@ -143,7 +143,7 @@ int main()
             break;
 
         case 2:
-            prin
+            printf
             break;
 
         case 3:
