@@ -133,8 +133,11 @@ int main()
                 }
 
                 printf("\nDeseja realizar outro cadastro? (s/n): ");
-                scanf(" %c", &Pcadastro); // coloquei isso tipo o usuario nao precisa ir ate o menu paara cadastrar outro produto
+                scanf(" %c", &Pcadastro);// coloquei isso tipo o usuario nao precisa ir ate o menu paara cadastrar outro produto
             } while (Pcadastro == 's' || Pcadastro == 'S');
+              // talvez voce se pergunte mas aonde esta o n?
+              /* nao usei o n por que nao a necessidade por que se o usuario digitar outra letra o numero ou se der
+              so enter ele entendera como erro re voltara para o menu automaticamente anulando a necessidade de colocar N*/
           
             break;
 
