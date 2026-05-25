@@ -170,11 +170,11 @@ int main()
 
         case 4: {
             if (total == 0) { // confere se a lista nao esta vazia
-                printf("\nNenhum produto cadastrado ainda!\n");
+                printf("\nNenhum produto cadastrado ainda\n");
                 break;
             }
 
-            int indiceMaior = 0; // aqui eu chuto que o primeiro produto da lista e o mais caro
+            int indiceMaior = 0; // aqui eu 
 
             for (i = 1; i < total; i++) { // passa comparando com o resto dos produtos
                 if (precos[i] > precos[indiceMaior]) { // se o preco desse for maior do que o que eu ja tinha salvo
