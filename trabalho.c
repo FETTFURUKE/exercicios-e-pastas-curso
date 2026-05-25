@@ -294,21 +294,22 @@ int main()
 
         case 9: { 
             if (total == 0) { // confere se tem itens para fazer calculo de media
-                printf("\nNenhum produto cadastrado para calcular a media!\n");
+                printf("\nNenhum produto cadastrado para calcular a media
+                    \n");
                 break;
             }
 
-            float somaPrecos = 0; // cofrinho para somar as etiquetas de precos
+            float somaPrecos = 0; // como se fosse uma calculadora que soma  quantos produtos"preços" estao cadastrados
 
             for (i = 0; i < total; i++) {
-                somaPrecos += precos[i]; // aqui ele vai somando o preco de cada produto puro
+                somaPrecos += precos[i]; // aqui ele vai somando o preco de cada produto
             }
 
             // aqui ele pega o resultado de todas as somas e divide pela quantidade de produtos salvos
             float media = somaPrecos / total;
 
             printf("\n===== MEDIA DE PRECOS =====\n");
-            printf("A media de preco dos produtos cadastrados e: R$ %.2f\n", media);
+            printf("a media de preco dos produtos cadastrados e: R$ %.2f\n", media);
             break;
         }
 
