@@ -279,7 +279,7 @@ int main()
                 break;
             }
 
-            int indiceMenor = 0; // aqui eu chuto que o primeiro produto da lista e o mais barato
+            int indiceMenor = 0; // aqui eu "chuto de novo" que o primeiro produto da lista e o mais barato
 
             for (i = 1; i < total; i++) { // passa comparando com todos os outros itens
                 if (precos[i] < precos[indiceMenor]) { // se o preco desse for menor do que o menor que eu tinha
