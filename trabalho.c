@@ -275,7 +275,7 @@ int main()
 
         case 8: { 
             if (total == 0) { // confere se tem produtos na lista
-                printf("\nNenhum produto cadastrado ainda!\n");
+                printf("\nNenhum produto cadastrado ainda\n");
                 break;
             }
 
