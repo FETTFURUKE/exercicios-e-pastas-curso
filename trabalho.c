@@ -344,16 +344,16 @@ int main()
             printf("\n===== ALERTA: ESTOQUE CRITICO (< 2 UNIDADES) =====\n");
             
             for (i = 0; i < total; i++) {
-                // Aqui está o filtro que você pediu: menor que 2
+                // aqui ele 
                 if (estoques[i] < 2) {
                     printf("AVISO! -> Produto: %s | Estoque atual: %d\n", nomes[i], estoques[i]);
                     temEstoqueBaixo = 1; // Opa, achamos pelo menos um
                 }
             }
 
-            // Se rodou o armário todo e não achou ninguém abaixo de 2 unidades
+            // eel verefica todos os produtos cadastrados e ve se a algum com o nivel do estoque  baixo
             if (temEstoqueBaixo == 0) {
-                printf("Tudo seguro! Nenhum produto com estoque abaixo de 2 unidades.\n");
+                printf("tudo seguro! nenhum produto com estoque abaixo \n");
             }
             break;
         }
