@@ -155,10 +155,26 @@ int main()
             break;
 
         case 3:
-            printf("digite o nome do produto: \n");
-            scanf("%s", pesquisaP);
-                 printf("Nome: %s | Preco: R$ %.2f | Estoque: %d \n", nomes[i], precos[i], estoques[i]);
-            break;
+           
+    char busca[50]; // Variável para o nome que queremos achar
+    
+    getchar(); // Limpa o buffer do teclado
+    printf("Digite o nome do produto para buscar: ");
+    fgets(busca, 50, stdin);
+    busca[strcspn(busca, "\n")] = '\0'; // Remove o "Enter" do final
+    for (i = 0; i < total; i++) {
+        // Se strcmp retornar 0, significa que os nomes são iguais!
+        if (strcmp(nomes[i], busca) == 0) {
+            printf("\nProduto Encontrado!\n");
+            printf("Nome: %s | Preco: R$ %.2f | Estoque: %d\n", nomes[i], precos[i], estoques[i]);
+            
+            // Se já achou o produto, não precisa continuar procurando os outros
+            break; 
+        }
+    }
+    
+    // O break do switch case
+    break;
 
         case 4:
             // IMPLEMENTAR
