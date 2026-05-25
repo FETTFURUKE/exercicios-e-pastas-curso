@@ -214,19 +214,19 @@ int main()
             int achou = 0;
 
             getchar();
-            printf("\nDigite o nome do produto que deseja alterar: ");
+            printf("\ndigite o nome do produto que deseja alterar: ");
             fgets(busca, 50, stdin);
             busca[strcspn(busca, "\n")] = '\0';
 
             for (i = 0; i < total; i++) { // loop para achar em qual linha o produto esta salvo
                 if (strcmp(nomes[i], busca) == 0) { // se achar o nome igual
-                    printf("\nProduto encontrado! Vamos atualizar os valores de \"%s\":\n", nomes[i]);
+                    printf("\nProduto encontrado, Vamos atualizar os valores de \"%s\":\n", nomes[i]);
                     
                     // aqui eu chamo as funcoes la de cima para colocar os novos valores por cima dos antigos
                     precos[i] = lerPreco();
                     estoques[i] = lerEstoque();
                     
-                    printf("\nValores updated com sucesso!\n");
+                    printf("\nValores atualizados com sucesso!\n");
                     achou = 1;
                     break; // para a busca porque ja alterou
                 }
