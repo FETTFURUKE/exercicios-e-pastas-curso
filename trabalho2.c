@@ -2,11 +2,9 @@
 #include <stdlib.h>
 
 
-
-
-
-typedef strucr{
-  int id[50];
+typedef struct tarefas
+{
+ int id[50];
 int prioridade;
 char titulo;
 char descricao;
@@ -15,10 +13,16 @@ int status;
 }
 
 int LerTitulo()
-
-
+Printf(" Digite o nome da sua tarefa: \n  ");
 char titulo;
-Printf(" Digite o nome da sua tarefa: \n  ")
+
+do 
+
+scanf("%s", &titulo);
+ e 
+
+
+
 
 
 
