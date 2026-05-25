@@ -125,7 +125,7 @@ int main()
 
     int total = 0;
     int opcao;
-
+    int i;
     do
     {
         menu();
@@ -144,7 +144,10 @@ int main()
 
         case 2:
             printf("  LISTA DE PRODUTOS  ");
-            while(total<MAX) printf("%.2f",  total);
+            i = 0;
+            while( i < total, i++) {
+            printf("%.d", total);
+            }
             break;
 
         case 3:
