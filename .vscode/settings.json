@@ -1,4 +1,7 @@
 {
+<<<<<<< HEAD
+    "C_Cpp.errorSquiggles": "disabled"
+=======
     "C_Cpp.errorSquiggles": "disabled",
     "cSpell.words": [
         "altura",
@@ -9,5 +12,10 @@
         "menor",
         "scabf"
     ],
+<<<<<<< HEAD
     "gitdoc.enabled": false
+=======
+    "gitdoc.enabled": true
+>>>>>>> 771c75de4d9bdfe4f1e938613712034970278899
+>>>>>>> cec66e86b87165a3e1b42486fe366771db166d5a
 }
