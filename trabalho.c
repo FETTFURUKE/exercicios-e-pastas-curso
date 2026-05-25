@@ -274,8 +274,9 @@ int main()
                 if (strcmp(produtos[i].nome, busca) == 0) {
                     achou = 1; 
                     
-                    //aqui o struct auxilia tipo inves de eu digitar nome , preço e depois estoque, com
-                     ele nao como ele tem tudo ja armazenado eu so chamo ele com o nome denominado e pronto//
+                    /*aqui o struct auxilia tipo inves de eu digitar nome , preço e depois estoque, com
+                     ele nao como ele tem tudo ja armazenado eu so chamo ele com o nome denominado e pronto*/
+
                     
                     for (j = i; j < total - 1; j++) {
                         produtos[j] = produtos[j + 1]; // Copia o produto da frente inteirinho para trás
@@ -301,7 +302,7 @@ int main()
             int indiceMenor = 0; // aqui eu "chuto de novo" que o primeiro produto da lista e o mais barato
 
             for (i = 1; i < total; i++) { // passa comparando com todos os outros itens
-                if (produtos[i].preco < produtos[indiceMenor].preco) { // compara os preços com ponto (.)
+                if (produtos[i].preco < produtos[indiceMenor].preco) { // compara os preços com ponto .
                     indiceMenor = i; // a posicao do mais barato passa a ser essa linha i
                 }
             }
@@ -313,14 +314,14 @@ int main()
 
         case 9: { 
             if (total == 0) { // confere se tem itens para fazer calculo de media
-                printf("\nNenhum produto cadastrado para calcular a media!\n");
+                printf("\nNenhum produto cadastrado para calcular a media\n");
                 break;
             }
 
             float somaPrecos = 0; // como se fosse uma calculadora que soma quantos produtos "preços" estao cadastrados
 
             for (i = 0; i < total; i++) {
-                somaPrecos += produtos[i].preco; // vai somando o preco de cada struct
+                somaPrecos += produtos[i].preco; // vai somando o preco de cada informação guardada na struct
             }
 
             // divide o total de somas pela quantidade de produtos salvos
