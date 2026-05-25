@@ -274,8 +274,9 @@ int main()
                 if (strcmp(produtos[i].nome, busca) == 0) {
                     achou = 1; 
                     
-                    // VEJA A MÁGICA AQUI: Como é struct, a gente puxa a "ficha inteira" de uma vez!
-                    // Não precisa fazer strcpy para nome, e depois copiar preço, e depois estoque.
+                    //aqui o struct auxilia tipo inves de eu digitar nome , preço e depois estoque, com
+                     ele nao como ele tem tudo ja armazenado eu so chamo ele com o nome denominado e pronto//
+                    
                     for (j = i; j < total - 1; j++) {
                         produtos[j] = produtos[j + 1]; // Copia o produto da frente inteirinho para trás
                     }
