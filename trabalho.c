@@ -126,6 +126,7 @@ int main()
     int total = 0;
     int opcao;
     int i;
+    
     do
     {
         menu();
@@ -143,16 +144,19 @@ int main()
             break;
 
         case 2:
-            printf("  LISTA DE PRODUTOS  ");
-          
-           while (i < total) {i++;
-            printf("nome: %d, preço: R$ %.2f, estoque: %d \n", nomes[i], precos[i], estoques[i]);
-              i = 0;
+            printf("\n===== LISTA DE PRODUTOS =====\n");
+            i = 0;
+            while (i < total) 
+            {
+                // %s exibe o texto do nome e o i++ no final faz o loop andar certo
+                printf("Nome: %s | Preco: R$ %.2f | Estoque: %d \n", nomes[i], precos[i], estoques[i]);
+                i++; 
             }
             break;
 
         case 3:
-            // IMPLEMENTAR
+            printf("digite o nome do produto: \n");
+            scanf("%s", 
             break;
 
         case 4:
