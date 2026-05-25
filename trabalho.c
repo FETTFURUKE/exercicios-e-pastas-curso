@@ -3,6 +3,14 @@
 
 #define MAX 10 // aqui eu defino um limite maximo de 10 
 
+
+
+typedef struct { //struct seria aonde os dados sao reunidos e typedef seria
+    char nome[50];
+    float preco;
+    int estoque;
+} Produto;
+
 float lerPreco()
 {
     float preco; // essa variavel serve para guardar as informaçoes sobre os preços
@@ -41,7 +49,8 @@ int lerEstoque() // seria uma função semelhante a anterios mais agora controla
     return estoque; // aqui ele salva e devolve o resultado para a variavel
 }
 
-int cadastrarProduto(char nomes[][50], float precos[], int estoques[], int total)
+// Agora a função recebe apenas a lista de structs de Produtos, bem mais simples!
+int cadastrarProduto(Produto produtos[], int total)
 {
     int i = total; // aqui eu defino o total de produtos
 
@@ -58,30 +67,31 @@ int cadastrarProduto(char nomes[][50], float precos[], int estoques[], int total
     do
     {
         printf("Nome do produto: ");
-        fgets(nomes[i], 50, stdin); // aqui ele pega o nome do produto direto do teclado
+        // Usamos o ponto (.) para entrar na ficha do produto e acessar o nome
+        fgets(produtos[i].nome, 50, stdin); 
 
         // aqui ele acha o enter que foi digitado e corta para o texto nao quebrar a linha
-        nomes[i][strcspn(nomes[i], "\n")] = '\0';
+        produtos[i].nome[strcspn(produtos[i].nome, "\n")] = '\0';
 
-        if (strlen(nomes[i]) == 0) // aqui ele confere se eu apertei enter sem digitar nada
+        if (strlen(produtos[i].nome) == 0) // aqui ele confere se eu apertei enter sem digitar nada
         {
             printf("Nome nao pode ser vazio! Digite alguma coisa.\n");
         }
 
-    } while (strlen(nomes[i]) == 0); // aqui ele se repete se o nome estiver em branco
+    } while (strlen(produtos[i].nome) == 0); // aqui ele se repete se o nome estiver em branco
 
-    // aqui ele chama as funções la de cima para validar e salvar direto nas listas
-    precos[i] = lerPreco();
-    estoques[i] = lerEstoque();
+    // aqui ele chama as funções la de cima para validar e salvar usando o ponto (.)
+    produtos[i].preco = lerPreco();
+    produtos[i].estoque = lerEstoque();
 
     total++; // aqui eu somo mais um no total de produtos salvos no sistema
 
     printf("\nProduto cadastrado com sucesso!\n");
 
-    return total; // aqui ele devolve o total updated para a funcao principal
+    return total; // aqui ele devolve o total atualizado para a funcao principal
 }
 
-void menu() // essa funcao serve para mostrar as opcoes na tela (agora sem a opcao 10)
+void menu() // essa funcao serve para mostrar as opcoes na tela
 {
     printf("\n=====================================\n");
     printf("        SISTEMA DE PRODUTOS\n");
@@ -101,10 +111,8 @@ void menu() // essa funcao serve para mostrar as opcoes na tela (agora sem a opc
 
 int main()
 {
-    // aqui eu crio as 3 listas que vao guardar as informacoes juntas na memoria
-    char nomes[MAX][50]; 
-    float precos[MAX];   
-    int estoques[MAX];   
+    // Em vez de 3 listas separadas, criamos apenas UMA lista baseada na nossa Struct
+    Produto produtos[MAX]; 
     int total = 0; 
     int opcao;    
     int i;        
@@ -118,8 +126,8 @@ int main()
         switch (opcao) // aqui ele joga para o caso que eu escolhi no menu
         {
         case 1:
-            // aqui eu chamo o cadastro e atualizo o total da main adicionando 1 produto e suas informaçoes
-            total = cadastrarProduto(nomes, precos, estoques, total);
+            // Passamos apenas a lista única de produtos e o total
+            total = cadastrarProduto(produtos, total);
             break;
 
         case 2:
@@ -132,14 +140,14 @@ int main()
             i = 0; // comeco a olhar a partir da primeira posicao
             while (i < total) // aqui ele roda ate chegar no limite de itens cadastrados
             {
-                // aqui ele printa os dados basicos do produto atual
-                printf("Nome: %s | Preco: R$ %.2f | Estoque: %d", nomes[i], precos[i], estoques[i]);
+                // usamos o .nome, .preco e .estoque para exibir os dados da struct
+                printf("Nome: %s | Preco: R$ %.2f | Estoque: %d", produtos[i].nome, produtos[i].preco, produtos[i].estoque);
                 
-                if (estoques[i] < 2) { // aqui ele checa sozinho se o estoque dessa linha ta menor que 2
-                    printf(" -> [ALERTA: ESTOQUE BAIXO]"); // se tiver baixo ele poe o texto na mesma linha
+                if (produtos[i].estoque < 2) { // checa automaticamente se o estoque tá baixo
+                    printf(" -> [ALERTA: ESTOQUE BAIXO]");
                 }
                 
-                printf("\n"); // pula a linha para o proximo produto ficar organizado
+                printf("\n");
                 i++; // aqui eu pulo para a proxima linha da lista
             }
             break;
@@ -159,11 +167,11 @@ int main()
             busca[strcspn(busca, "\n")] = '\0'; // tira o enter do final do texto de busca
 
             for (i = 0; i < total; i++) { // aqui ele passa olhando linha por linha dos produtos
-                if (strcmp(nomes[i], busca) == 0) { // aqui ele compara se os dois nomes sao iguais
+                if (strcmp(produtos[i].nome, busca) == 0) { // compara usando o .nome
                     printf("\nProduto Encontrado!\n");
-                    printf("Nome: %s | Preco: R$ %.2f | Estoque: %d", nomes[i], precos[i], estoques[i]);
+                    printf("Nome: %s | Preco: R$ %.2f | Estoque: %d", produtos[i].nome, produtos[i].preco, produtos[i].estoque);
                     
-                    if (estoques[i] < 2) { // aqui ele ja avisa na busca se esse item achado ta acabando
+                    if (produtos[i].estoque < 2) { // aviso automático integrado na busca
                         printf(" -> [ALERTA: ESTOQUE BAIXO]");
                     }
                     
@@ -188,13 +196,13 @@ int main()
             int indiceMaior = 0; // aqui eu "chuto" que o primeiro numero e o maior
 
             for (i = 1; i < total; i++) { // passa comparando com o resto dos produtos
-                if (precos[i] > precos[indiceMaior]) { // se o preco desse for maior do que o que eu ja tinha salvo
+                if (produtos[i].preco > produtos[indiceMaior].preco) { // compara os preços acessando com ponto (.)
                     indiceMaior = i; // a posicao do mais caro passa a ser essa nova linha i
                 }
             }
 
             printf("\n===== PRODUTO MAIS CARO =====\n");
-            printf("Nome: %s | Preco: R$ %.2f | Estoque: %d\n", nomes[indiceMaior], precos[indiceMaior], estoques[indiceMaior]);
+            printf("Nome: %s | Preco: R$ %.2f | Estoque: %d\n", produtos[indiceMaior].nome, produtos[indiceMaior].preco, produtos[indiceMaior].estoque);
             break;
         }
 
@@ -207,8 +215,8 @@ int main()
             float valorTotalGeral = 0; // aqui e como se fosse a calculadora sem infromaçoes zerada
 
             for (i = 0; i < total; i++) { // loop para passar por todos os produtos
-                // aqui ele calcula o preco vezes o estoque e vai guardando tudo na calcualdora
-                valorTotalGeral += (precos[i] * estoques[i]);
+                // calcula o preco vezes o estoque acessando direto da struct
+                valorTotalGeral += (produtos[i].preco * produtos[i].estoque);
             }
 
             printf("\n ===== VALOR TOTAL EM ESTOQUE ===== \n");
@@ -230,14 +238,14 @@ int main()
             busca[strcspn(busca, "\n")] = '\0';
 
             for (i = 0; i < total; i++) { // loop para achar em qual linha o produto esta salvo
-                if (strcmp(nomes[i], busca) == 0) { // se achar o nome igual
-                    printf("\nProduto encontrado, Vamos atualizar os valores de \"%s\":\n", nomes[i]);
+                if (strcmp(produtos[i].nome, busca) == 0) { // se achar o nome igual
+                    printf("\nProduto encontrado, Vamos atualizar os valores de \"%s\":\n", produtos[i].nome);
                     
-                    // aqui eu chamo as funcoes la de cima para colocar os novos valores por cima dos antigos
-                    precos[i] = lerPreco();
-                    estoques[i] = lerEstoque();
+                    // atualiza os campos específicos da struct do produto achado
+                    produtos[i].preco = lerPreco();
+                    produtos[i].estoque = lerEstoque();
                     
-                    printf("\nValores atualizados com sucesso!\n");
+                    printf("\nValores updated com sucesso!\n");
                     achou = 1;
                     break; // para a busca porque ja alterou
                 }
@@ -263,14 +271,13 @@ int main()
             busca[strcspn(busca, "\n")] = '\0';
 
             for (i = 0; i < total; i++) { // loop para achar o produto na lista
-                if (strcmp(nomes[i], busca) == 0) {
+                if (strcmp(produtos[i].nome, busca) == 0) {
                     achou = 1; 
                     
-                    // aqui eu crio um loop que puxa todos os produtos da frente para tras para nao deixar buraco
+                    // VEJA A MÁGICA AQUI: Como é struct, a gente puxa a "ficha inteira" de uma vez!
+                    // Não precisa fazer strcpy para nome, e depois copiar preço, e depois estoque.
                     for (j = i; j < total - 1; j++) {
-                        strcpy(nomes[j], nomes[j + 1]); // puxa o nome da frente para tras
-                        precos[j] = precos[j + 1];       // puxa o preco da frente para tras
-                        estoques[j] = estoques[j + 1];   // puxa o estoque da frente para tras
+                        produtos[j] = produtos[j + 1]; // Copia o produto da frente inteirinho para trás
                     }
                     
                     total--; // aqui eu tiro um do total de produtos porque deletei um item
@@ -293,13 +300,13 @@ int main()
             int indiceMenor = 0; // aqui eu "chuto de novo" que o primeiro produto da lista e o mais barato
 
             for (i = 1; i < total; i++) { // passa comparando com todos os outros itens
-                if (precos[i] < precos[indiceMenor]) { // se o preco desse for menor do que o menor que eu tinha
+                if (produtos[i].preco < produtos[indiceMenor].preco) { // compara os preços com ponto (.)
                     indiceMenor = i; // a posicao do mais barato passa a ser essa linha i
                 }
             }
 
             printf("\n===== PRODUTO MAIS BARATO =====\n");
-            printf("Nome: %s | Preco: R$ %.2f | Estoque: %d\n", nomes[indiceMenor], precos[indiceMenor], estoques[indiceMenor]);
+            printf("Nome: %s | Preco: R$ %.2f | Estoque: %d\n", produtos[indiceMenor].nome, produtos[indiceMenor].preco, produtos[indiceMenor].estoque);
             break;
         }
 
@@ -312,10 +319,10 @@ int main()
             float somaPrecos = 0; // como se fosse uma calculadora que soma quantos produtos "preços" estao cadastrados
 
             for (i = 0; i < total; i++) {
-                somaPrecos += precos[i]; // aqui ele vai somando o preco de cada produto
+                somaPrecos += produtos[i].preco; // vai somando o preco de cada struct
             }
 
-            // aqui ele pega o resultado de todas as somas e divide pela quantidade de produtos salvos
+            // divide o total de somas pela quantidade de produtos salvos
             float media = somaPrecos / total;
 
             printf("\n===== MEDIA DE PRECOS =====\n");
