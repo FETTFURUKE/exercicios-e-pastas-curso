@@ -128,9 +128,7 @@ int main()
         case 1:
             // Passamos apenas a lista única de produtos e o total
             total = cadastrarProduto(produtos, total);
-            printf("deseja realizar outro cadastro? (sim/nao) /n")
-            scanf("%s", char Pcadastro);
-            
+          
             break;
 
         case 2:
