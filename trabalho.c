@@ -19,33 +19,32 @@ float lerPreco()
         }
 
     } while (preco < 0); // aqui ele verifica se o preço for negativo ele volta para o do
-    return preco; // Se o preço for válido, a função termina e "devolve" esse valor para quem a chamou
-}
+    return preco;// se o preço digitado for positivo ele volta para quem ela foi chamada
 
-// ====================================================================================
-// FUNÇÃO: VALIDAÇÃO DE ESTOQUE
-// Mesma lógica da função anterior, mas trabalha com números inteiros (int).
-// ====================================================================================
-int lerEstoque()
+
+
+
+
+int lerEstoque()// seria uma função semelhante a anterios mais agora controlando o estoque
 {
-    int estoque; // Cria um espaço na memória para guardar a quantidade inteira
+    int estoque; aqui eu crio uma variavel na memoria chamada estoque
 
     do
     {
         printf("Digite a quantidade em estoque: ");
-        scanf("%d", &estoque); // O '%d' avisa ao computador que ele vai ler um número inteiro
+        scanf("%d", &estoque); // le um o numero inteiro digitado
 
         if (estoque < 0)
         {
             printf("Quantidade invalida! O estoque nao pode ser negativo.\n");
         }
 
-    } while (estoque < 0); // Fica preso aqui até que a quantidade seja 0 ou maior
+    } while (estoque < 0); // aqui ele se repete ate que o umero digitado seja maior que 0
 
-    return estoque; // Devolve o número inteiro validado para o programa principal
+    return estoque; aqui ele salva e devolta o resultado para a variavel
 }
 
-// ====================================================================================
+
 // FUNÇÃO: CADASTRO DE PRODUTOS
 // Recebe as listas por referência (ponteiros implícitos) e a quantidade atual de cadastrados.
 // ====================================================================================
