@@ -1,401 +1,290 @@
-#include <stdio.h>   
-#include <string.h> 
-#include <stdlib.h> 
+#include <stdio.h>
+#include <string.h>
+#include <windows.h>
+#define MAX_TAREFAS 100
 
-#define MAX 10 
 
-typedef struct { 
+
+
+
+typedef struct {
    
-    char titulo[10];
-    char descricao[200];
-    int status;
-    int prioridade;
-     int id;
-} tarefa;
+   
+   
 
-int LerID()
-{
-    int id; // essa variavel serve para guardar as informaçoes sobre os preços
+   
+} T
 
-    do
-    {
-        printf("Digite o id do produto: ");
-        scanf("%d", &id); // 
-
-        if (id < 0) // aqui seria uma segurança para nenhum numero negativo passar
-        {
-            printf("id invalido, digite apenas numeros inteiros\n");
-        }
-
-    } while (id < 0); 
-    
-    return id; 
+// Função auxiliar para remover o '\n' gerado pelo fgets e limpar o buffer
+void limparString(char *str) {
+    size_t len = strlen(str);
+    if (len > 0 && str[len - 1] == '\n') {
+        str[len - 1] = '\0';
+    }
 }
 
-int LerPrioridade() 
-{
-    int prioridade; 
-
-    do
-    {
-        printf("Digite a prioridade da tarefa: 1-baixa 2-media 3-alta");
-        scanf("%d", &prioridade); 
-
-        if (prioridade  <0, ) (prioridade > 4);
-        {
-            printf("prioridade invalida escolha as opcoes definidas\n");
-        }
-
-    } while (prioridade = 1,2,3); 
-
-    return prioridade; 
-}
-
-
-
-int Lerstatus() {
-
-int status;
-
-
-do {
-printf("digite o status da tarefa:  0- Pendente, 1-concluida");
-scanf("%d",  &status);
-
-if (status )
-
-
-
-
-}
-
-
-
-
-
-
-
-
-
-}
-
-int cadastrarProduto(Produto produtos[], int total)
-{
-    int i = total; // aqui eu defino o total de produtos
-
-    if (total >= MAX) // aqui eu defino o limite maximo de produtos usando o MAX
-    {
-        printf("\nLimite maximo de produtos atingido\n");
-        return total; // aqui ele "ignora" o que foi digitado e continua com os 10 produtos salvos sem mudar nada
+// 1 - Cadastrar tarefa
+void cadastrarTarefa(Tarefa tarefas[], int *totalTarefas, int *proximoId) {
+    if (*totalTarefas >= MAX_TAREFAS) {
+        printf("\n[ERRO] Limite de tarefas atingido!\n");
+        return;
     }
 
-    getchar(); // ele remove os dados anterios para evitar enganos
+    Tarefa novaTarefa;
+    novaTarefa.id = *proximoId;
 
-    printf("\n===== CADASTRO DE PRODUTO =====\n");
+    printf("\n--- Cadastrar Tarefa (ID: %d) ---\n", novaTarefa.id);
+    
+    // Limpar o buffer antes de ler strings com fgets
+    getchar(); 
 
-    do
-    {
-        printf("Nome do produto: ");
-        // Usamos o ponto (.) para entrar na ficha do produto e acessar o nome
-        fgets(produtos[i].nome, 50, stdin); 
+    printf("Título: ");
+    fgets(novaTarefa.titulo, sizeof(novaTarefa.titulo), stdin);
+    limparString(novaTarefa.titulo);
 
-        // aqui ele acha o enter que foi digitado e corta para o texto nao quebrar a linha
-        produtos[i].nome[strcspn(produtos[i].nome, "\n")] = '\0';
+    printf("Descrição: ");
+    fgets(novaTarefa.descricao, sizeof(novaTarefa.descricao), stdin);
+    limparString(novaTarefa.descricao);
 
-        if (strlen(produtos[i].nome) == 0) // aqui ele confere se eu apertei enter sem digitar nada
-        {
-            printf("Nome nao pode ser vazio! Digite alguma coisa.\n");
+    // Validação da prioridade
+    do {
+        printf("Prioridade (1 - Baixa, 2 - Média, 3 - Alta): ");
+        scanf("%d", &novaTarefa.prioridade);
+        if (novaTarefa.prioridade < 1 || novaTarefa.prioridade > 3) {
+            printf("Prioridade inválida! Tente novamente.\n");
         }
+    } while (novaTarefa.prioridade < 1 || novaTarefa.prioridade > 3);
 
-    } while (strlen(produtos[i].nome) == 0); // aqui ele se repete se o nome estiver em branco
+    novaTarefa.status = 0; // Toda tarefa inicia como Pendente
 
-    // aqui ele chama as funções la de cima para validar e salvar usando o ponto  .
-    produtos[i].preco = lerPreco();
-    produtos[i].estoque = lerEstoque();
+    // Salva no vetor
+    tarefas[*totalTarefas] = novaTarefa;
+    (*totalTarefas)++;
+    (*proximoId)++;
 
-    total++; // aqui eu somo mais um no total de produtos salvos no sistema
-
-    printf("\nProduto cadastrado com sucesso!\n");
-
-    return total; // aqui ele devolve o total atualizado para a funcao principal
+    printf("\nTarefa cadastrada com sucesso!\n");
 }
 
-void menu() // essa funcao serve para mostrar as opcoes na tela
-{
-    printf("\n=====================================\n");
-    printf("        SISTEMA DE PRODUTOS\n");
-    printf("=====================================\n");
-    printf("1 - Cadastrar produto\n");
-    printf("2 - Listar produtos\n");
-    printf("3 - Buscar produto\n");
-    printf("4 - Produto mais caro\n");
-    printf("5 - Valor total em estoque\n");
-    printf("6 - Alterar Preco e Estoque\n");
-    printf("7 - Remover produto\n");
-    printf("8 - Produto mais barato\n");
-    printf("9 - Media de precos dos produtos\n");
-    printf("0 - Sair\n");
-    printf("Opcao: ");
+// Função auxiliar para exibir uma única tarefa formatada
+void exibirTarefa(Tarefa t) {
+    printf("\nID: %d\n", t.id);
+    printf("Título: %s\n", t.titulo);
+    printf("Descrição: %s\n", t.descricao);
+    printf("Prioridade: %s\n", (t.prioridade == 1) ? "Baixa" : (t.prioridade == 2) ? "Média" : "Alta");
+    printf("Status: %s\n", (t.status == 0) ? "Pendente" : "Concluída");
+    printf("-----------------------------------\n");
 }
 
-int main()
-{
-    Produto produtos[MAX]; 
-    int total = 0; 
-    int opcao;    
-    int i;        
-    char Pcadastro;
+// 2 - Listar todas as tarefas
+void listarTarefas(Tarefa tarefas[], int totalTarefas) {
+    if (totalTarefas == 0) {
+        printf("\nNenhuma tarefa cadastrada.\n");
+        return;
+    }
 
-    do
-    {
-        menu(); // aqui ele mostra o menu na tela
+    printf("\n=== LISTA DE TODAS AS TAREFAS ===\n");
+    for (int i = 0; i < totalTarefas; i++) {
+        exibirTarefa(tarefas[i]);
+    }
+}
 
-        scanf("%d", &opcao); // aqui ele le a opcao que eu digitei
+// 3 - Buscar tarefa pelo título
+void buscarTarefa(Tarefa tarefas[], int totalTarefas) {
+    if (totalTarefas == 0) {
+        printf("\nNenhuma tarefa cadastrada para busca.\n");
+        return;
+    }
 
-        switch (opcao) // aqui ele joga para o caso que eu escolhi no menu
-        {
-        case 1:
+    char termoBusca[100];
+    printf("\nDigite o título da tarefa que deseja buscar: ");
+    getchar(); // Limpa o buffer
+    fgets(termoBusca, sizeof(termoBusca), stdin);
+    limparString(termoBusca);
+
+    int encontrada = 0;
+    for (int i = 0; i < totalTarefas; i++) {
+        if (strcmp(tarefas[i].titulo, termoBusca) == 0) {
+            printf("\n--- Tarefa Encontrada ---");
+            exibirTarefa(tarefas[i]);
+            encontrada = 1;
+        }
+    }
+
+    if (!encontrada) {
+        printf("\nTarefa não encontrada.\n");
+    }
+}
+
+// 4 - Alterar status da tarefa
+void alterarStatus(Tarefa tarefas[], int totalTarefas) {
+    if (totalTarefas == 0) {
+        printf("\nNenhuma tarefa cadastrada.\n");
+        return;
+    }
+
+    int idBusca, encontrado = 0;
+    printf("\nDigite o ID da tarefa para alterar o status: ");
+    scanf("%d", &idBusca);
+
+    for (int i = 0; i < totalTarefas; i++) {
+        if (tarefas[i].id == idBusca) {
+            encontrado = 1;
+            int novoStatus;
+            printf("\nTarefa atual: %s\n", tarefas[i].titulo);
+            printf("Status atual: %s\n", (tarefas[i].status == 0) ? "Pendente" : "Concluída");
+            
             do {
-                total = cadastrarProduto(produtos, total);
-                
-                if (total >= MAX) {
-                    break; // Se estourar o limite de 10, sai do laço de repetição automático
+                printf("Escolha o novo status (0 - Pendente, 1 - Concluída): ");
+                scanf("%d", &novoStatus);
+                if (novoStatus != 0 && novoStatus != 1) {
+                    printf("Opção inválida!\n");
                 }
+            } while (novoStatus != 0 && novoStatus != 1);
 
-                printf("\nDeseja realizar outro cadastro? (s/n): ");
-                scanf(" %c", &Pcadastro);// coloquei isso tipo o usuario nao precisa ir ate o menu paara cadastrar outro produto
-            } while (Pcadastro == 's' || Pcadastro == 'S');
-              // talvez voce se pergunte mas aonde esta o n?
-              /* nao usei o n por que nao a necessidade por que se o usuario digitar outra letra o numero ou se der
-              so enter ele entendera como erro re voltara para o menu automaticamente anulando a necessidade de colocar N*/
-          
+            tarefas[i].status = novoStatus;
+            printf("\nStatus alterado com sucesso!\n");
             break;
+        }
+    }
 
-        case 2:
-            if (total == 0) { // aqui ele confere se nao tem nada cadastrado ainda
-                printf("\nNenhum produto cadastrado ainda!\n");
-                break;
-            }
-            printf("\n===== LISTA DE PRODUTOS =====\n");
+    if (!encontrado) {
+        printf("\nTarefa com ID %d não encontrada.\n", idBusca);
+    }
+}
+
+// 5 e 6 - Mostrar por status (Filtro)
+void mostrarPorStatus(Tarefa tarefas[], int totalTarefas, int statusFiltro) {
+    if (totalTarefas == 0) {
+        printf("\nNenhuma tarefa cadastrada.\n");
+        return;
+    }
+
+    int contador = 0;
+    printf("\n=== TAREFAS %s ===\n", (statusFiltro == 0) ? "PENDENTES" : "CONCLUÍDAS");
+
+    for (int i = 0; i < totalTarefas; i++) {
+        if (tarefas[i].status == statusFiltro) {
+            exibirTarefa(tarefas[i]);
+            contador++;
+        }
+    }
+
+    if (contador == 0) {
+        printf("Nenhuma tarefa encontrada neste status.\n");
+    }
+}
+
+// 7 - Mostrar tarefa com maior prioridade
+void mostrarMaiorPrioridade(Tarefa tarefas[], int totalTarefas) {
+    if (totalTarefas == 0) {
+        printf("\nNenhuma tarefa cadastrada.\n");
+        return;
+    }
+
+    int maiorPrioridade = 0;
+
+    // Primeiro descobre qual é o maior valor de prioridade presente no vetor
+    for (int i = 0; i < totalTarefas; i++) {
+        if (tarefas[i].prioridade > maiorPrioridade) {
+            maiorPrioridade = tarefas[i].prioridade;
+        }
+    }
+
+    printf("\n=== TAREFA(S) DE MAIOR PRIORIDADE ===\n");
+    // Exibe todas as tarefas que possuem essa maior prioridade
+    for (int i = 0; i < totalTarefas; i++) {
+        if (tarefas[i].prioridade == maiorPrioridade) {
+            exibirTarefa(tarefas[i]);
+        }
+    }
+}
+
+// 8 - Remover tarefa (Garante a reorganização do vetor)
+void removerTarefa(Tarefa tarefas[], int *totalTarefas) {
+    if (*totalTarefas == 0) {
+        printf("\nNenhuma tarefa cadastrada para remover.\n");
+        return;
+    }
+
+    int idBusca, encontrado = 0;
+    printf("\nDigite o ID da tarefa que deseja remover: ");
+    scanf("%d", &idBusca);
+
+    for (int i = 0; i < *totalTarefas; i++) {
+        if (tarefas[i].id == idBusca) {
+            encontrado = 1;
             
-            i = 0; // comeco a olhar a partir da primeira posicao
-            while (i < total) // aqui ele roda ate chegar no limite de itens cadastrados
-            {
-                // usamos o .nome, .preco e .estoque para exibir os dados da struct
-                printf("Nome: %s | Preco: R$ %.2f | Estoque: %d", produtos[i].nome, produtos[i].preco, produtos[i].estoque);
-                
-                if (produtos[i].estoque < 5) { // AJUSTADO: Alerta para estoque menor que 5 baseado no desafio extra
-                    printf(" -> ALERTA: ESTOQUE BAIXO!!!!!!!!!!");
-                }
-                
-                printf("\n");
-                i++; // aqui eu pulo para a proxima linha da lista
-            }
-            break;
- 
-        case 3: { 
-            if (total == 0) { // verifica se tem produtos antes de comecar a busca
-                printf("\nNenhum produto cadastrado para buscar!\n");
-                break;
+            // Reorganização: move todos os elementos seguintes uma posição para trás
+            for (int j = i; j < (*totalTarefas) - 1; j++) {
+                tarefas[j] = tarefas[j + 1];
             }
             
-            char busca[50]; // variavel para guardar o nome do produto que eu quero achar
-            int achou = 0;  // essa variavel comeca em zero e serve para avisar se achei ou nao
-
-            getchar(); // limpa a memoria do terminal
-            printf("\nDigite o nome do produto: ");
-            fgets(busca, 50, stdin); // le o nome que eu quero buscar
-            busca[strcspn(busca, "\n")] = '\0'; // tira o enter do final do texto de busca
-
-            for (i = 0; i < total; i++) { // aqui ele passa olhando linha por linha dos produtos
-                if (strcmp(produtos[i].nome, busca) == 0) { // compara usando o .nome
-                    printf("\nProduto Encontrado!\n");
-                    printf("Nome: %s | Preco: R$ %.2f | Estoque: %d", produtos[i].nome, produtos[i].preco, produtos[i].estoque);
-                    
-                    if (produtos[i].estoque < 3) { /* seria um codigo que verefica automaticamente 
-                        pro usuario se o estoque do produto pesquisado ou listado esta correto*/
-                        printf(" -> [ALERTA: ESTOQUE BAIXO]");
-                    }
-                    
-                    printf("\n");
-                    achou = 1; // muda para 1 para avisar que deu certo
-                    break; // aqui ele para o loop porque ja achou o que queria
-                }
-            }
-
-            if (achou == 0) { // se o loop terminou e continuou zero significa que nao achou
-                printf("\nProduto \"%s\" nao encontrado.\n", busca);
-            }
+            (*totalTarefas)--; // Reduz o contador global de tarefas
+            printf("\nTarefa removida com sucesso!\n");
             break;
         }
+    }
 
-        case 4: {
-            if (total == 0) { // confere se a lista nao esta vazia
-                printf("\nNenhum produto cadastrado ainda\n");
+    if (!encontrado) {
+        printf("\nTarefa com ID %d não encontrada.\n", idBusca);
+    }
+}
+
+// Função Principal
+int main() {
+    Tarefa listaTarefas[MAX_TAREFAS];
+    int totalTarefas = 0;
+    int proximoId = 1; // ID auto-incrementável único
+    int opcao;
+SetConsoleCP(CP_UTF8);
+    do {
+        printf("\n=============================\n");
+        printf(" SISTEMA DE TAREFAS\n");
+        printf("=============================\n");
+        printf("1 - Cadastrar tarefa\n");
+        printf("2 - Listar tarefas\n");
+        printf("3 - Buscar tarefa\n");
+        printf("4 - Alterar status\n");
+        printf("5 - Mostrar pendentes\n");
+        printf("6 - Mostrar concluídas\n");
+        printf("7 - Maior prioridade\n");
+        printf("8 - Remover tarefa\n");
+        printf("0 - Sair\n");
+        printf("Escolha uma opção: ");
+        scanf("%d", &opcao);
+
+        switch (opcao) {
+            case 1:
+                cadastrarTarefa(listaTarefas, &totalTarefas, &proximoId);
                 break;
-            }
-
-            int indiceMaior = 0; // aqui eu "chuto" que o primeiro numero e o maior
-
-            for (i = 1; i < total; i++) { // passa comparando com o resto dos produtos
-                if (produtos[i].preco > produtos[indiceMaior].preco) { // compara os preços acessando com ponto (.)
-                    indiceMaior = i; // a posicao do mais caro passa a ser essa nova linha i
-                }
-            }
-
-            printf("\n===== PRODUTO MAIS CARO =====\n");
-            printf("Nome: %s | Preco: R$ %.2f | Estoque: %d\n", produtos[indiceMaior].nome, produtos[indiceMaior].preco, produtos[indiceMaior].estoque);
-            break;
-        }
-
-        case 5: {
-            if (total == 0) { // confere se tem produtos para calcular
-                printf("\nNenhum produto em estoque para calcular\n");
+            case 2:
+                listarTarefas(listaTarefas, totalTarefas);
                 break;
-            }
-
-            float valorTotalGeral = 0; // aqui e como se fosse a calculadora sem infromaçoes zerada
-
-            for (i = 0; i < total; i++) { // loop para passar por todos os produtos
-                // calcula o preco vezes o estoque acessando directo da struct
-                valorTotalGeral += (produtos[i].preco * produtos[i].estoque);
-            }
-
-            printf("\n ===== VALOR TOTAL EM ESTOQUE ===== \n");
-            printf("O valor total acumulado de todos os produtos e: R$ %.2f\n", valorTotalGeral);
-            break;
-        }
-
-        case 6: { 
-            if (total == 0) { // verifica se tem o que alterar
-                printf("\nNenhum produto cadastrado para alterar!\n");
+            case 3:
+                buscarTarefa(listaTarefas, totalTarefas);
                 break;
-            }
-            char busca[50]; // guarda o nome do produto que eu quero mudar
-            int achou = 0;
-
-            getchar();
-            printf("\ndigite o nome do produto que deseja alterar: ");
-            fgets(busca, 50, stdin);
-            busca[strcspn(busca, "\n")] = '\0';
-
-            for (i = 0; i < total; i++) { // loop para achar em qual linha o produto esta salvo
-                if (strcmp(produtos[i].nome, busca) == 0) { // se achar o nome igual
-                    printf("\nProduto encontrado, Vamos atualizar os valores de \"%s\":\n", produtos[i].nome);
-                    
-                    // atualiza os campos específicos da struct do produto achado
-                    produtos[i].preco = lerPreco();
-                    produtos[i].estoque = lerEstoque();
-                    
-                    printf("\nValores updated com sucesso!\n");
-                    achou = 1;
-                    break; // para a busca porque ja alterou
-                }
-            }
-            if (achou == 0) {
-                printf("\nProduto \"%s\" nao encontrado.\n", busca);
-            }
-            break;
-        }
-
-        case 7: { 
-            if (total == 0) { // confere se tem o que remover
-                printf("\nNenhum produto cadastrado para remover!\n");
+            case 4:
+                alterarStatus(listaTarefas, totalTarefas);
                 break;
-            }
-            char busca[50]; // guarda o nome de quem eu quero apagar
-            int achou = 0;
-            int j; // variavel extra para ajudar a mexer na fila de produtos
-
-            getchar();
-            printf("\nDigite o nome do produto que deseja remover: ");
-            fgets(busca, 50, stdin);
-            busca[strcspn(busca, "\n")] = '\0';
-
-            for (i = 0; i < total; i++) { // loop para achar o produto na lista
-                if (strcmp(produtos[i].nome, busca) == 0) {
-                    achou = 1; 
-                    
-                    /*aqui o struct auxilia tipo inves de eu digitar nome , preço e depois estoque, com
-                      ele nao como ele tem tudo ja armazenado eu so chamo ele com o nome denominado e pronto*/
-                    
-                    for (j = i; j < total - 1; j++) {
-                        produtos[j] = produtos[j + 1]; // Copia o produto da frente inteirinho para trás
-                    }
-                    
-                    total--; // aqui eu tiro um do total de produtos porque deletei um item
-                    printf("\nProduto removido com sucesso!\n");
-                    break;
-                }
-            }
-            if (achou == 0) {
-                printf("\nProduto \"%s\" nao encontrado.\n", busca);
-            }
-            break;
-        }
-
-        case 8: { 
-            if (total == 0) { // confere se tem produtos na lista
-                printf("\nNenhum produto cadastrado ainda\n");
+            case 5:
+                mostrarPorStatus(listaTarefas, totalTarefas, 0); // 0 para Pendentes
                 break;
-            }
-
-            int indiceMenor = 0; // aqui eu "chuto de novo" que o primeiro produto da lista e o mais barato
-
-            for (i = 1; i < total; i++) { // passa comparando com todos os outros itens
-                if (produtos[i].preco < produtos[indiceMenor].preco) { // compara os preços com ponto .
-                    indiceMenor = i; // a posicao do mais barato passa a ser essa linha i
-                }
-            }
-
-            printf("\n===== PRODUTO MAIS BARATO =====\n");
-            printf("Nome: %s | Preco: R$ %.2f | Estoque: %d\n", produtos[indiceMenor].nome, produtos[indiceMenor].preco, produtos[indiceMenor].estoque);
-            break;
-        }
-
-        case 9: { 
-            if (total == 0) { // confere se tem itens para fazer calculo de media
-                printf("\nNenhum produto cadastrado para calcular a media\n");
+            case 6:
+                mostrarPorStatus(listaTarefas, totalTarefas, 1); // 1 para Concluídas
                 break;
-            }
-
-            float somaPrecos = 0; // como se fosse uma calculadora que soma quantos produtos "preços" estao cadastrados
-
-            for (i = 0; i < total; i++) {
-                somaPrecos += produtos[i].preco; // vai somando o preco de cada informação guardada na struct
-            }
-
-            // divide o total de somas pela quantidade de produtos salvos
-            float media = somaPrecos / total;
-
-            printf("\n===== MEDIA DE PRECOS =====\n");
-            printf("a media de preco dos produtos cadastrados e: R$ %.2f\n", media);
-            break;
+            case 7:
+                mostrarMaiorPrioridade(listaTarefas, totalTarefas);
+                break;
+            case 8:
+                removerTarefa(listaTarefas, &totalTarefas);
+                break;
+            case 0:
+                printf("\nEncerrando o sistema... Até logo!\n");
+                break;
+            default:
+                printf("\nOpção inválida! Escolha um número do menu.\n");
         }
+    } while (opcao != 0);
 
-        case 0:
-            printf("\nPrograma encerrado.\n");
-            break;
-
-        default:
-            printf("\nOpcao invalida! Escolha um numero do menu.\n");
-        }
-
-      
-   
-        if (opcao != 0) {
-            printf("\n--------------------------------------------------\n");
-            printf("Pressione [Enter] para voltar ao menu...");
-            // coloquei isso por que o menu estava tampando o resultado
-           
-            while (getchar() != '\n'); 
-            
-            getchar();     // Trava o programa na tela para você ler o resultado com calma
-            system("cls"); // limpa o terminal completamente antes de rodar o menu de novo
-        }
-        // =========================================================================
-
-    } while (opcao != 0); // aqui ele mantem o menu rodando ate que a opcao digitada seja zero
-
-    return 0; // avisa o computador que o programa terminou sem erros
+    return 0;
 }
