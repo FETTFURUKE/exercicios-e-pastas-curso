@@ -1,19 +1,16 @@
 #include <stdio.h>
 #include <string.h>
-#include <windows.h>
+
 #define MAX_TAREFAS 100
 
-
-
-
-
+// Definição da struct utilizando typedef para simplificar o código
 typedef struct {
-   
-   
-   
-
-   
-} T
+    int id;
+    char titulo[100];
+    char descricao[200];
+    int prioridade;
+    int status; // 0 = Pendente, 1 = Concluída
+} Tarefa;
 
 // Função auxiliar para remover o '\n' gerado pelo fgets e limpar o buffer
 void limparString(char *str) {
@@ -236,7 +233,7 @@ int main() {
     int totalTarefas = 0;
     int proximoId = 1; // ID auto-incrementável único
     int opcao;
-SetConsoleCP(CP_UTF8);
+
     do {
         printf("\n=============================\n");
         printf(" SISTEMA DE TAREFAS\n");
