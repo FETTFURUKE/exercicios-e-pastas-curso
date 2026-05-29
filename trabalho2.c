@@ -67,7 +67,7 @@ void exibirTarefa(Tarefa t) {
     printf("Prioridade: %s\n", (t.prioridade == 1) ? "Baixa" : (t.prioridade == 2) ? "Média" : "Alta");
     printf("Status: %s\n", (t.status == 0) ? "Pendente" : "Concluída");
     printf("-----------------------------------\n");
-}
+
 
 
 void listarTarefas(Tarefa tarefas[], int totalTarefas) {
@@ -161,7 +161,6 @@ void mostrarPorStatus(Tarefa tarefas[], int totalTarefas, int statusFiltro) {
         if (tarefas[i].status == statusFiltro) {
             exibirTarefa(tarefas[i]);
             contador++;
-            
         }
     }
 
