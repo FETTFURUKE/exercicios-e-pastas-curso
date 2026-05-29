@@ -161,6 +161,7 @@ void mostrarPorStatus(Tarefa tarefas[], int totalTarefas, int statusFiltro) {
         if (tarefas[i].status == statusFiltro) {
             exibirTarefa(tarefas[i]);
             contador++;
+            
         }
     }
 
