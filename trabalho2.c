@@ -138,7 +138,7 @@ void alterarStatus(Tarefa tarefas[], int totalTarefas) {
             printf("\nStatus alterado com sucesso!\n");
             break;
 
-            printf("ola doidos isso é um avio doidos")
+        
         }
     }
 
