@@ -3,16 +3,15 @@
 
 #define MAX_TAREFAS 100
 
-// Definição da struct utilizando typedef para simplificar o código
 typedef struct {
     int id;
     char titulo[100];
     char descricao[200];
     int prioridade;
-    int status; // 0 = Pendente, 1 = Concluída
+    int status; 
 } Tarefa;
 
-// Função auxiliar para remover o '\n' gerado pelo fgets e limpar o buffer
+
 void limparString(char *str) {
     size_t len = strlen(str);
     if (len > 0 && str[len - 1] == '\n') {
@@ -20,7 +19,6 @@ void limparString(char *str) {
     }
 }
 
-// 1 - Cadastrar tarefa
 void cadastrarTarefa(Tarefa tarefas[], int *totalTarefas, int *proximoId) {
     if (*totalTarefas >= MAX_TAREFAS) {
         printf("\n[ERRO] Limite de tarefas atingido!\n");
@@ -32,7 +30,7 @@ void cadastrarTarefa(Tarefa tarefas[], int *totalTarefas, int *proximoId) {
 
     printf("\n--- Cadastrar Tarefa (ID: %d) ---\n", novaTarefa.id);
     
-    // Limpar o buffer antes de ler strings com fgets
+    
     getchar(); 
 
     printf("Título: ");
@@ -43,7 +41,7 @@ void cadastrarTarefa(Tarefa tarefas[], int *totalTarefas, int *proximoId) {
     fgets(novaTarefa.descricao, sizeof(novaTarefa.descricao), stdin);
     limparString(novaTarefa.descricao);
 
-    // Validação da prioridade
+    
     do {
         printf("Prioridade (1 - Baixa, 2 - Média, 3 - Alta): ");
         scanf("%d", &novaTarefa.prioridade);
@@ -52,9 +50,9 @@ void cadastrarTarefa(Tarefa tarefas[], int *totalTarefas, int *proximoId) {
         }
     } while (novaTarefa.prioridade < 1 || novaTarefa.prioridade > 3);
 
-    novaTarefa.status = 0; // Toda tarefa inicia como Pendente
+    novaTarefa.status = 0; 
 
-    // Salva no vetor
+    
     tarefas[*totalTarefas] = novaTarefa;
     (*totalTarefas)++;
     (*proximoId)++;
@@ -62,7 +60,6 @@ void cadastrarTarefa(Tarefa tarefas[], int *totalTarefas, int *proximoId) {
     printf("\nTarefa cadastrada com sucesso!\n");
 }
 
-// Função auxiliar para exibir uma única tarefa formatada
 void exibirTarefa(Tarefa t) {
     printf("\nID: %d\n", t.id);
     printf("Título: %s\n", t.titulo);
@@ -72,7 +69,7 @@ void exibirTarefa(Tarefa t) {
     printf("-----------------------------------\n");
 }
 
-// 2 - Listar todas as tarefas
+
 void listarTarefas(Tarefa tarefas[], int totalTarefas) {
     if (totalTarefas == 0) {
         printf("\nNenhuma tarefa cadastrada.\n");
@@ -85,7 +82,6 @@ void listarTarefas(Tarefa tarefas[], int totalTarefas) {
     }
 }
 
-// 3 - Buscar tarefa pelo título
 void buscarTarefa(Tarefa tarefas[], int totalTarefas) {
     if (totalTarefas == 0) {
         printf("\nNenhuma tarefa cadastrada para busca.\n");
@@ -94,7 +90,7 @@ void buscarTarefa(Tarefa tarefas[], int totalTarefas) {
 
     char termoBusca[100];
     printf("\nDigite o título da tarefa que deseja buscar: ");
-    getchar(); // Limpa o buffer
+    getchar(); 
     fgets(termoBusca, sizeof(termoBusca), stdin);
     limparString(termoBusca);
 
@@ -112,7 +108,7 @@ void buscarTarefa(Tarefa tarefas[], int totalTarefas) {
     }
 }
 
-// 4 - Alterar status da tarefa
+
 void alterarStatus(Tarefa tarefas[], int totalTarefas) {
     if (totalTarefas == 0) {
         printf("\nNenhuma tarefa cadastrada.\n");
@@ -149,7 +145,7 @@ void alterarStatus(Tarefa tarefas[], int totalTarefas) {
     }
 }
 
-// 5 e 6 - Mostrar por status (Filtro)
+
 void mostrarPorStatus(Tarefa tarefas[], int totalTarefas, int statusFiltro) {
     if (totalTarefas == 0) {
         printf("\nNenhuma tarefa cadastrada.\n");
@@ -171,7 +167,6 @@ void mostrarPorStatus(Tarefa tarefas[], int totalTarefas, int statusFiltro) {
     }
 }
 
-// 7 - Mostrar tarefa com maior prioridade
 void mostrarMaiorPrioridade(Tarefa tarefas[], int totalTarefas) {
     if (totalTarefas == 0) {
         printf("\nNenhuma tarefa cadastrada.\n");
@@ -180,7 +175,7 @@ void mostrarMaiorPrioridade(Tarefa tarefas[], int totalTarefas) {
 
     int maiorPrioridade = 0;
 
-    // Primeiro descobre qual é o maior valor de prioridade presente no vetor
+    
     for (int i = 0; i < totalTarefas; i++) {
         if (tarefas[i].prioridade > maiorPrioridade) {
             maiorPrioridade = tarefas[i].prioridade;
@@ -188,7 +183,7 @@ void mostrarMaiorPrioridade(Tarefa tarefas[], int totalTarefas) {
     }
 
     printf("\n=== TAREFA(S) DE MAIOR PRIORIDADE ===\n");
-    // Exibe todas as tarefas que possuem essa maior prioridade
+    
     for (int i = 0; i < totalTarefas; i++) {
         if (tarefas[i].prioridade == maiorPrioridade) {
             exibirTarefa(tarefas[i]);
@@ -196,7 +191,7 @@ void mostrarMaiorPrioridade(Tarefa tarefas[], int totalTarefas) {
     }
 }
 
-// 8 - Remover tarefa (Garante a reorganização do vetor)
+
 void removerTarefa(Tarefa tarefas[], int *totalTarefas) {
     if (*totalTarefas == 0) {
         printf("\nNenhuma tarefa cadastrada para remover.\n");
@@ -211,12 +206,12 @@ void removerTarefa(Tarefa tarefas[], int *totalTarefas) {
         if (tarefas[i].id == idBusca) {
             encontrado = 1;
             
-            // Reorganização: move todos os elementos seguintes uma posição para trás
+      
             for (int j = i; j < (*totalTarefas) - 1; j++) {
                 tarefas[j] = tarefas[j + 1];
             }
             
-            (*totalTarefas)--; // Reduz o contador global de tarefas
+            (*totalTarefas)--; 
             printf("\nTarefa removida com sucesso!\n");
             break;
         }
@@ -227,11 +222,11 @@ void removerTarefa(Tarefa tarefas[], int *totalTarefas) {
     }
 }
 
-// Função Principal
+
 int main() {
     Tarefa listaTarefas[MAX_TAREFAS];
     int totalTarefas = 0;
-    int proximoId = 1; // ID auto-incrementável único
+    int proximoId = 1;
     int opcao;
 
     do {
@@ -264,10 +259,10 @@ int main() {
                 alterarStatus(listaTarefas, totalTarefas);
                 break;
             case 5:
-                mostrarPorStatus(listaTarefas, totalTarefas, 0); // 0 para Pendentes
+                mostrarPorStatus(listaTarefas, totalTarefas, 0); 
                 break;
             case 6:
-                mostrarPorStatus(listaTarefas, totalTarefas, 1); // 1 para Concluídas
+                mostrarPorStatus(listaTarefas, totalTarefas, 1); 
                 break;
             case 7:
                 mostrarMaiorPrioridade(listaTarefas, totalTarefas);
