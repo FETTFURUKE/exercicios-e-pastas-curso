@@ -2,4 +2,11 @@
 #include <string.h>
 
 
-type
+typedef struct {
+
+
+
+
+
+
+}tarefa;
