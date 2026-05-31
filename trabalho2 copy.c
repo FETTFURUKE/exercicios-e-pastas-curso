@@ -10,3 +10,6 @@ typedef struct {
     int status;
 
 }tarefa;
+
+
+int 
