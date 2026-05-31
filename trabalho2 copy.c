@@ -11,24 +11,27 @@ typedef struct {
 
 }tarefa;
 
+
+void printarMenu( 
+do{
+printf("  SISTEMA DE PEDIDOS  \n");
+Prinf("1 - Gerenciamento de ordens  \n");
+printf("2 - Listar pedidos  \n");
+printf("3 - Buscar pedido  \n");
+printf("4 - Status dos pedidos  \n");
+printf("5 - Maior prioridade  \n");
+printf("6 - Remover pedido  \n")
+printf("7 - Desligar  \n")
+
+
+}
+
+)
 int main(){
 
 char menu;
 
 
-do{
-printf("  SISTEMA DE PEDIDOS  \n");
-Prinf("1 - Gerenciamento de ordens ");
-printf("2 - Listar pedidos");
-printf("3 - Buscar pedido");
-printf("4 - Status dos pedidos ");
-printf("5 - Maior prioridade");
-printf("6 - Remover pedido")
-printf("7 - Desligar")
-
-
-
-}
 
 
 
