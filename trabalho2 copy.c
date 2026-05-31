@@ -11,4 +11,29 @@ typedef struct {
 
 }tarefa;
 
-void 
+int main(){
+
+char menu;
+
+
+char menu(){
+
+
+    
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+}
