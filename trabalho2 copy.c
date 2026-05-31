@@ -24,10 +24,13 @@ printf("6 - Remover pedido  \n");
 printf("7 - Desligar  \n");
 
 
+
 }
 
 
 int main(){
+
+int opcao;
 
 
 
