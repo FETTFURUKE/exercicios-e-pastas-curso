@@ -30,7 +30,7 @@ printf("7 - Desligar  \n");
 int main(){
 
 
-printarMenu();
+
 
 
 
