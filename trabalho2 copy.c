@@ -12,6 +12,44 @@ typedef struct {
 }tarefa;
 
 
+int main(){
+
+int opcao;
+
+printarMenu();
+ printf(" Escolha a opcao desejada: \n");
+ scanf("%d" &opcao);
+
+
+switch(opcao) {
+
+case 1:
+print(" ");
+break;
+
+case 2:
+printf(" ");
+break;
+
+case 3:
+printf("");
+break;
+
+case 4:
+printf("");
+break;
+
+
+
+
+
+}
+
+
+}
+
+
+
 void printarMenu(){
 
 printf("  SISTEMA DE PEDIDOS  \n");
@@ -23,25 +61,16 @@ printf("5 - Maior prioridade  \n");
 printf("6 - Remover pedido  \n");
 printf("7 - Desligar  \n");
 
-
-
 }
 
 
-int main(){
-
-int opcao;
+void cadastroOrden(){
 
 
 
 
-
-
-
-
-
+    
 }
-
 
 
 
