@@ -4,8 +4,8 @@ float numeros[5];
 int i;
 
 int main{
-int i;
-for(i=0;)
+i = 0
+for(i=0; i<6; i++);
 
 
 
