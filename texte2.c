@@ -1,19 +1,10 @@
 #include <stdio.h>
 
-float numeros[5];
-int i;
+float numero;
 
 int main() {
 
-for(i=0; i<6; i++) {
-printf("digite um valor:  \n");
-scanf("%f", &numeros);
-
-continue
-}
-
-
-
+while(numero )
 
 
 
@@ -28,6 +19,3 @@ continue
 
 
 }
-
-
-
