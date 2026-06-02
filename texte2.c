@@ -9,7 +9,7 @@ for(i=0; i<6; i++) {
 printf("digite um valor:  \n");
 scanf("%f", &numeros);
 
-
+continue
 }
 
 
