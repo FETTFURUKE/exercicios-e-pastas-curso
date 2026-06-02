@@ -1,5 +1,70 @@
 #include <stdio.h>
 
+int
+
+int main{
 
 
-printf
+
+
+switch (
+    
+
+)
+{
+case constant expression:
+    printf("")
+    break;
+
+default:
+    break;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+}
