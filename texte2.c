@@ -4,7 +4,20 @@ float numero;
 
 int main() {
 
-while(numero )
+
+    printf("digite um numero: \n");
+    scanf("%f", &numero);
+
+while(numero == 1,2,3,4){
+
+
+
+
+
+
+
+
+}
 
 
 
