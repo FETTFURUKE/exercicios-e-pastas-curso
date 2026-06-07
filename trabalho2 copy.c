@@ -66,10 +66,10 @@ printf("7 - Desligar  \n");
 
 void cadastroOrden(){
 
+printf("")
 
 
 
-    
 }
 
 
