@@ -3,7 +3,6 @@
 typedef struct{
 float temperatura;
 
-
 }
 
 
