@@ -27,11 +27,15 @@ switch( opcao){
 
 case 1:
 
-
+temperatura = Lertemperatura;
+break;
 
 
 
 case 2:
+
+hora = Lerhora;
+break;
 
 
 
