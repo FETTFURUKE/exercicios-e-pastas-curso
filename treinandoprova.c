@@ -18,6 +18,25 @@ scanf("%d", &hora);
 
 }
 
+void menu(){
+printf(" --- REGISTRO DE TEMPERATURA ---  \n")
+printf(" 1- Cadastro da temperatura")
+
+
+
+
+
+
+
+
+}
+
+int cadastrotemperatura(int hora, float temperatura) {
+
+
+
+}
+
 int main(){
 
 float temperatura;
